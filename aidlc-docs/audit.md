@@ -2000,3 +2000,684 @@ Add under **Duplicate Prevention Rules**:
 **Context**: CONSTRUCTION - UOW-04 Code Generation planning approval gate
 
 ---
+
+## UOW-04 Code Generation - Plan Approval
+**Timestamp**: 2026-05-10T00:17:59Z
+**User Input**: "approve"
+**AI Response**: "Recorded explicit approval of the UOW-04 Code Generation plan and proceeded with application code generation."
+**Context**: CONSTRUCTION - UOW-04 Code Generation plan approval
+
+---
+
+## UOW-04 Code Generation - Generation
+**Timestamp**: 2026-05-10T04:18:20Z
+**User Input**: "continue"
+**AI Response**: "Generated UOW-04 shared contracts, schemas, permissions, Prisma schema and migration, API repository/service/controller/module, frontend invoice views and routes, UOW-04 tests, PBT coverage, and code summary documentation."
+**Context**: CONSTRUCTION - UOW-04 Code Generation Part 2
+
+---
+
+## UOW-04 Code Generation - Verification
+**Timestamp**: 2026-05-10T04:18:20Z
+**User Input**: "continue"
+**AI Response**: "Verified UOW-04 generation with prisma:generate, typecheck, targeted shared/API/web UOW-04 tests, full workspace tests, full PBT tests, lint, boundary scan, and content validation scan. Updated the UOW-04 code generation plan and aidlc-state.md."
+**Context**: CONSTRUCTION - UOW-04 Code Generation verification
+
+---
+
+## UOW-04 Code Generation - Approval Prompt
+**Timestamp**: 2026-05-10T04:18:20Z
+**User Input**: "continue"
+**AI Response**: "Code Generation Complete - UOW-04 Invoice Lifecycle and Invoice Source Records. Please examine the generated code and choose Request Changes or Continue to Next Stage."
+**Context**: CONSTRUCTION - UOW-04 Code Generation approval gate
+
+---
+
+## UOW-04 Code Generation - Approval
+**Timestamp**: 2026-05-10T04:20:18Z
+**User Input**: "continue next stage"
+**AI Response**: "Recorded explicit approval of UOW-04 Code Generation and marked UOW-04 Code Generation complete."
+**Context**: CONSTRUCTION - UOW-04 Code Generation approval
+
+---
+
+## UOW-05 Functional Design - Planning
+**Timestamp**: 2026-05-10T04:20:18Z
+**User Input**: "continue next stage"
+**AI Response**: "Created aidlc-docs/construction/plans/uow-05-functional-design-plan.md with UOW-05 scope, boundaries, checklist, Security Baseline and Property-Based Testing compliance summaries, and 18 Functional Design questions covering payment proof states, posting states, proof scope, posting validation, duplicate guards, automatic and manual allocation, credits, receipt numbering and snapshots, reversals, corrections, support intents, object authorization, frontend surfaces, and property-based tests. Updated aidlc-state.md to mark UOW-04 Code Generation complete and wait at UOW-05 Functional Design Planning."
+**Context**: CONSTRUCTION - UOW-05 Functional Design planning
+
+---
+
+## UOW-05 Functional Design - Planning Answer Prompt
+**Timestamp**: 2026-05-10T04:20:18Z
+**User Input**: "continue next stage"
+**AI Response**: "Please answer all 18 questions in aidlc-docs/construction/plans/uow-05-functional-design-plan.md by filling each [Answer]: tag with a letter choice. After all answers are complete, reply done so the answers can be validated before UOW-05 Functional Design artifact generation."
+**Context**: CONSTRUCTION - UOW-05 Functional Design planning answer gate
+
+---
+
+## UOW-05 Functional Design - Planning Answers
+**Timestamp**: 2026-05-10T04:25:18Z
+**User Input**: "A for all questions"
+**AI Response**: "Applied option A to all 18 UOW-05 Functional Design planning questions."
+**Context**: CONSTRUCTION - UOW-05 Functional Design answer collection
+
+---
+
+## UOW-05 Functional Design - Answer Validation
+**Timestamp**: 2026-05-10T04:25:18Z
+**User Input**: "A for all questions"
+**AI Response**: "Validated all 18 UOW-05 Functional Design answers. All answers selected valid option A choices. No blanks, invalid choices, contradictions, vague answers, or unresolved financial assumptions remained."
+**Context**: CONSTRUCTION - UOW-05 Functional Design answer validation
+
+---
+
+## UOW-05 Functional Design - Artifact Generation
+**Timestamp**: 2026-05-10T04:25:18Z
+**User Input**: "A for all questions"
+**AI Response**: "Generated UOW-05 Functional Design artifacts: business-logic-model.md, business-rules.md, domain-entities.md, and frontend-components.md. Updated the UOW-05 Functional Design plan checkboxes and moved aidlc-state.md to await explicit Functional Design approval."
+**Context**: CONSTRUCTION - UOW-05 Functional Design artifact generation
+
+---
+
+## UOW-05 Functional Design - Approval Prompt
+**Timestamp**: 2026-05-10T04:25:18Z
+**User Input**: "A for all questions"
+**AI Response**: "Functional Design Complete - UOW-05 Payments, Allocations, Credits, Receipts, and Financial Corrections. Please examine the functional design artifacts and choose Request Changes or Continue to Next Stage."
+**Context**: CONSTRUCTION - UOW-05 Functional Design approval gate
+
+---
+
+## UOW-05 Functional Design - Change Request
+**Timestamp**: 2026-05-10T04:33:50Z
+**User Input**: "UOW05-DUPLICATE-005
+Define active proofs for duplicate checks.
+
+UOW05-PROOF-006
+Make payment reference requirements configuration-driven.
+
+UOW05-POSTING-008
+Clarify Reversed is derived from linked reversal, not in-place mutation.
+
+UOW05-CORRECTION-004
+Avoid hard-coding UOW-08 as the opening-balance/import owner unless confirmed."
+**AI Response**: "Patched UOW-05 Functional Design artifacts to define active proofs for duplicate checks, make payment reference requirements configuration-driven, clarify reversed payment status as derived from linked reversal records, and avoid hard-coding UOW-08 as the opening-balance/import owner."
+**Context**: CONSTRUCTION - UOW-05 Functional Design amendment
+
+---
+
+## UOW-05 Functional Design - Approval
+**Timestamp**: 2026-05-10T04:35:52Z
+**User Input**: "approved"
+**AI Response**: "Recorded explicit approval of UOW-05 Functional Design and proceeded to UOW-05 NFR Requirements Planning."
+**Context**: CONSTRUCTION - UOW-05 Functional Design approval
+
+---
+
+## UOW-05 NFR Requirements - Planning
+**Timestamp**: 2026-05-10T04:35:52Z
+**User Input**: "approved"
+**AI Response**: "Created aidlc-docs/construction/plans/uow-05-nfr-requirements-plan.md with UOW-05 NFR scope, source context, checklist, Security Baseline and Property-Based Testing compliance summaries, and 18 NFR Requirements questions covering volume, performance, concurrency, durability, security, logging, precision, database/query posture, support intents, validation stack, PBT, accessibility, observability, audit retention, and tech stack posture. Updated aidlc-state.md to mark UOW-05 Functional Design complete and wait at UOW-05 NFR Requirements Planning."
+**Context**: CONSTRUCTION - UOW-05 NFR Requirements planning
+
+---
+
+## UOW-05 NFR Requirements - Planning Answer Prompt
+**Timestamp**: 2026-05-10T04:35:52Z
+**User Input**: "approved"
+**AI Response**: "Please answer all 18 questions in aidlc-docs/construction/plans/uow-05-nfr-requirements-plan.md by filling each [Answer]: tag with a letter choice. After all answers are complete, reply done so the answers can be validated before UOW-05 NFR Requirements artifact generation."
+**Context**: CONSTRUCTION - UOW-05 NFR Requirements planning answer gate
+
+---
+
+## UOW-05 NFR Requirements - Planning Answers
+**Timestamp**: 2026-05-10T04:37:48Z
+**User Input**: "I take all your recommendations"
+**AI Response**: "Applied option A to all 18 UOW-05 NFR Requirements planning questions."
+**Context**: CONSTRUCTION - UOW-05 NFR Requirements answer collection
+
+---
+
+## UOW-05 NFR Requirements - Answer Validation
+**Timestamp**: 2026-05-10T04:37:48Z
+**User Input**: "I take all your recommendations"
+**AI Response**: "Validated all 18 UOW-05 NFR Requirements answers. All answers selected valid option A choices. No blanks, invalid choices, contradictions, vague answers, or unresolved NFR assumptions remained."
+**Context**: CONSTRUCTION - UOW-05 NFR Requirements answer validation
+
+---
+
+## UOW-05 NFR Requirements - Artifact Generation
+**Timestamp**: 2026-05-10T04:37:48Z
+**User Input**: "I take all your recommendations"
+**AI Response**: "Generated UOW-05 NFR Requirements artifacts: nfr-requirements.md and tech-stack-decisions.md. Updated the UOW-05 NFR Requirements plan checkboxes and moved aidlc-state.md to await explicit NFR Requirements approval."
+**Context**: CONSTRUCTION - UOW-05 NFR Requirements artifact generation
+
+---
+
+## UOW-05 NFR Requirements - Approval Prompt
+**Timestamp**: 2026-05-10T04:37:48Z
+**User Input**: "I take all your recommendations"
+**AI Response**: "NFR Requirements Complete - UOW-05 Payments, Allocations, Credits, Receipts, and Financial Corrections. Please examine the NFR requirements artifacts and choose Request Changes or Continue to Next Stage."
+**Context**: CONSTRUCTION - UOW-05 NFR Requirements approval gate
+
+---
+
+## UOW-05 NFR Requirements - Approval
+**Timestamp**: 2026-05-10T04:40:10Z
+**User Input**: "approve"
+**AI Response**: "Recorded explicit approval of UOW-05 NFR Requirements and proceeded to UOW-05 NFR Design Planning."
+**Context**: CONSTRUCTION - UOW-05 NFR Requirements approval
+
+---
+
+## UOW-05 NFR Design - Planning
+**Timestamp**: 2026-05-10T04:40:10Z
+**User Input**: "approve"
+**AI Response**: "Created aidlc-docs/construction/plans/uow-05-nfr-design-plan.md with UOW-05 NFR Design scope, source context, checklist, Security Baseline and Property-Based Testing compliance summaries, and 16 NFR Design questions covering proof submission, posting transaction boundaries, duplicate guards, allocation locks, credit safety, receipt numbering, reversal idempotency, corrections, fail-closed validation, decimal policy, support intents, authorization, observability, frontend patterns, PBT, and logical component decomposition. Updated aidlc-state.md to mark UOW-05 NFR Requirements complete and wait at UOW-05 NFR Design Planning."
+**Context**: CONSTRUCTION - UOW-05 NFR Design planning
+
+---
+
+## UOW-05 NFR Design - Planning Answer Prompt
+**Timestamp**: 2026-05-10T04:40:10Z
+**User Input**: "approve"
+**AI Response**: "Please answer all 16 questions in aidlc-docs/construction/plans/uow-05-nfr-design-plan.md by filling each [Answer]: tag with a letter choice. After all answers are complete, reply done so the answers can be validated before UOW-05 NFR Design artifact generation."
+**Context**: CONSTRUCTION - UOW-05 NFR Design planning answer gate
+
+---
+
+## UOW-05 NFR Design - Planning Answers
+**Timestamp**: 2026-05-10T04:41:53Z
+**User Input**: "accept all recommendations"
+**AI Response**: "Applied option A to all 16 UOW-05 NFR Design planning questions."
+**Context**: CONSTRUCTION - UOW-05 NFR Design answer collection
+
+---
+
+## UOW-05 NFR Design - Answer Validation
+**Timestamp**: 2026-05-10T04:41:53Z
+**User Input**: "accept all recommendations"
+**AI Response**: "Validated all 16 UOW-05 NFR Design answers. All answers selected valid option A choices. No blanks, invalid choices, contradictions, vague answers, or unresolved NFR design assumptions remained."
+**Context**: CONSTRUCTION - UOW-05 NFR Design answer validation
+
+---
+
+## UOW-05 NFR Design - Artifact Generation
+**Timestamp**: 2026-05-10T04:41:53Z
+**User Input**: "accept all recommendations"
+**AI Response**: "Generated UOW-05 NFR Design artifacts: nfr-design-patterns.md and logical-components.md. Updated the UOW-05 NFR Design plan checkboxes and moved aidlc-state.md to await explicit NFR Design approval."
+**Context**: CONSTRUCTION - UOW-05 NFR Design artifact generation
+
+---
+
+## UOW-05 NFR Design - Approval Prompt
+**Timestamp**: 2026-05-10T04:41:53Z
+**User Input**: "accept all recommendations"
+**AI Response**: "NFR Design Complete - UOW-05 Payments, Allocations, Credits, Receipts, and Financial Corrections. Please examine the NFR design artifacts and choose Request Changes or Continue to Next Stage."
+**Context**: CONSTRUCTION - UOW-05 NFR Design approval gate
+
+---
+
+## UOW-05 NFR Design - Approval
+**Timestamp**: 2026-05-10T04:44:30Z
+**User Input**: "approve"
+**AI Response**: "Recorded explicit approval of UOW-05 NFR Design and proceeded to UOW-05 Infrastructure Design Planning."
+**Context**: CONSTRUCTION - UOW-05 NFR Design approval
+
+---
+
+## UOW-05 Infrastructure Design - Planning
+**Timestamp**: 2026-05-10T04:44:30Z
+**User Input**: "approve"
+**AI Response**: "Created aidlc-docs/construction/plans/uow-05-infrastructure-design-plan.md with UOW-05 infrastructure scope, source context, checklist, Security Baseline and Property-Based Testing compliance summaries, and 11 Infrastructure Design questions covering deployment model, database migrations, transaction/locking infrastructure, posting infrastructure, backup/restore, logging/monitoring, alerts, route exposure, secrets/configuration, support intents, and shared infrastructure updates. Updated aidlc-state.md to mark UOW-05 NFR Design complete and wait at UOW-05 Infrastructure Design Planning."
+**Context**: CONSTRUCTION - UOW-05 Infrastructure Design planning
+
+---
+
+## UOW-05 Infrastructure Design - Planning Answer Prompt
+**Timestamp**: 2026-05-10T04:44:30Z
+**User Input**: "approve"
+**AI Response**: "Please answer all 11 questions in aidlc-docs/construction/plans/uow-05-infrastructure-design-plan.md by filling each [Answer]: tag with a letter choice. After all answers are complete, reply done so the answers can be validated before UOW-05 Infrastructure Design artifact generation."
+**Context**: CONSTRUCTION - UOW-05 Infrastructure Design planning answer gate
+
+---
+
+## UOW-05 Infrastructure Design - Planning Answers
+**Timestamp**: 2026-05-10T04:46:05Z
+**User Input**: "Accept all recommendations"
+**AI Response**: "Applied option A to all 11 UOW-05 Infrastructure Design planning questions."
+**Context**: CONSTRUCTION - UOW-05 Infrastructure Design answer collection
+
+---
+
+## UOW-05 Infrastructure Design - Answer Validation
+**Timestamp**: 2026-05-10T04:46:05Z
+**User Input**: "Accept all recommendations"
+**AI Response**: "Validated all 11 UOW-05 Infrastructure Design answers. All answers selected valid option A choices. No blanks, invalid choices, contradictions, vague answers, or unresolved infrastructure assumptions remained."
+**Context**: CONSTRUCTION - UOW-05 Infrastructure Design answer validation
+
+---
+
+## UOW-05 Infrastructure Design - Artifact Generation
+**Timestamp**: 2026-05-10T04:46:05Z
+**User Input**: "Accept all recommendations"
+**AI Response**: "Generated UOW-05 Infrastructure Design artifacts: infrastructure-design.md and deployment-architecture.md. Updated shared-infrastructure.md with UOW-05 infrastructure impact details, updated plan checkboxes, and moved aidlc-state.md to await explicit Infrastructure Design approval."
+**Context**: CONSTRUCTION - UOW-05 Infrastructure Design artifact generation
+
+---
+
+## UOW-05 Infrastructure Design - Approval Prompt
+**Timestamp**: 2026-05-10T04:46:05Z
+**User Input**: "Accept all recommendations"
+**AI Response**: "Infrastructure Design Complete - UOW-05 Payments, Allocations, Credits, Receipts, and Financial Corrections. Please examine the infrastructure design artifacts and choose Request Changes or Continue to Next Stage."
+**Context**: CONSTRUCTION - UOW-05 Infrastructure Design approval gate
+
+---
+
+## UOW-05 Infrastructure Design - Approval
+**Timestamp**: 2026-05-10T04:48:48Z
+**User Input**: "approved"
+**AI Response**: "Recorded explicit approval of UOW-05 Infrastructure Design and proceeded to UOW-05 Code Generation Planning."
+**Context**: CONSTRUCTION - UOW-05 Infrastructure Design approval
+
+---
+
+## UOW-05 Code Generation - Planning
+**Timestamp**: 2026-05-10T04:48:48Z
+**User Input**: "approved"
+**AI Response**: "Created aidlc-docs/construction/plans/uow-05-code-generation-plan.md with story traceability, dependencies, boundaries, target paths, and 27 ordered generation steps for shared domain code, Prisma schema/migration, API repositories/services/controllers/tests, frontend components/routes/tests, code summaries, verification, and compliance checks. Updated aidlc-state.md to mark UOW-05 Infrastructure Design complete and wait at UOW-05 Code Generation Planning."
+**Context**: CONSTRUCTION - UOW-05 Code Generation planning
+
+---
+
+## UOW-05 Code Generation - Plan Approval Prompt
+**Timestamp**: 2026-05-10T04:48:48Z
+**User Input**: "approved"
+**AI Response**: "Please review aidlc-docs/construction/plans/uow-05-code-generation-plan.md. Code generation will not begin until the plan is explicitly approved."
+**Context**: CONSTRUCTION - UOW-05 Code Generation planning approval gate
+
+---
+
+## UOW-05 Code Generation - Plan Approval
+**Timestamp**: 2026-05-10T04:51:08Z
+**User Input**: "apparove"
+**AI Response**: "Recorded explicit approval of the UOW-05 Code Generation plan and began application code generation."
+**Context**: CONSTRUCTION - UOW-05 Code Generation plan approval
+
+---
+
+## UOW-05 Code Generation - Artifact Generation
+**Timestamp**: 2026-05-10T05:02:41Z
+**User Input**: "apparove"
+**AI Response**: "Generated UOW-05 shared domain code, Zod schemas, permissions, Prisma schema and migration, API repository/service/controller/module, frontend payment and receipt views/routes, tests, and code summary documentation."
+**Context**: CONSTRUCTION - UOW-05 Code Generation artifact generation
+
+---
+
+## UOW-05 Code Generation - Verification
+**Timestamp**: 2026-05-10T05:02:41Z
+**User Input**: "apparove"
+**AI Response**: "Verified UOW-05 generation with Prisma generation, typecheck, lint, targeted shared/API/web tests, targeted PBT tests, full workspace tests, full PBT tests, duplicate generated-file scan, boundary scan, and content validation scan. Fixed defects found during verification without widening scope."
+**Context**: CONSTRUCTION - UOW-05 Code Generation verification
+
+---
+
+## UOW-05 Code Generation - Approval Prompt
+**Timestamp**: 2026-05-10T05:02:41Z
+**User Input**: "apparove"
+**AI Response**: "Code Generation Complete - UOW-05 Payments, Allocations, Credits, Receipts, and Financial Corrections. Please examine generated code and choose Request Changes or Continue to Next Stage."
+**Context**: CONSTRUCTION - UOW-05 Code Generation approval gate
+
+---
+
+## UOW-05 Code Generation - Approval
+**Timestamp**: 2026-05-10T05:04:14Z
+**User Input**: "approve"
+**AI Response**: "Recorded explicit approval of UOW-05 Code Generation and proceeded to UOW-06 Functional Design Planning."
+**Context**: CONSTRUCTION - UOW-05 Code Generation approval
+
+---
+
+## UOW-06 Functional Design - Planning
+**Timestamp**: 2026-05-10T05:04:14Z
+**User Input**: "approve"
+**AI Response**: "Created aidlc-docs/construction/plans/uow-06-functional-design-plan.md with UOW-06 scope, source context, checklist, Security Baseline and Property-Based Testing compliance summaries, and 16 Functional Design questions covering overdue detection, evaluation dates, aging buckets, penalty periods, penalty basis, non-compounding behavior, partial payments, duplicate prevention, penalty lifecycle, waivers, delinquency, reminders, access, and PBT candidates. Updated aidlc-state.md to mark UOW-05 Code Generation complete and wait at UOW-06 Functional Design Planning."
+**Context**: CONSTRUCTION - UOW-06 Functional Design planning
+
+---
+
+## UOW-06 Functional Design - Planning Answer Prompt
+**Timestamp**: 2026-05-10T05:04:14Z
+**User Input**: "approve"
+**AI Response**: "Please answer all 16 questions in aidlc-docs/construction/plans/uow-06-functional-design-plan.md by filling each [Answer]: tag with a letter choice. After all answers are complete, reply done so the answers can be validated before UOW-06 Functional Design artifact generation."
+**Context**: CONSTRUCTION - UOW-06 Functional Design planning answer gate
+
+---
+
+## UOW-06 Functional Design - Planning Answers
+**Timestamp**: 2026-05-10T05:09:33Z
+**User Input**: "### Question 1
+[Answer]: A. An issued, non-voided invoice is overdue when the evaluation date is after `dueDate + resolvedGracePeriodDays`, and the invoice has positive open amount after UOW-05 payment, allocation, credit, reversal, and correction effects are applied. Overdue status must be derived from source facts, not manually toggled.
+
+### Question 2
+[Answer]: A. Use an explicit `evaluationDate` supplied by the penalty, aging, or reminder workflow. Scheduled jobs pass the job business date, and manual staff reviews pass the selected review date. Do not use the server clock as the financial control date.
+
+### Question 3
+[Answer]: A. Use configured day ranges measured from the first overdue date, with default buckets `Current`, `1-30`, `31-60`, `61-90`, and `90+`. Bucket definitions should be effective-dated configuration consumed from UOW-03 or defaulted by UOW-06 only until configured.
+
+### Question 4
+[Answer]: A. Use a normalized penalty period key such as `YYYY-MM` based on the evaluation date in the HOA business timezone. Only one non-voided penalty source record is allowed per invoice, charge type, and penalty period.
+
+### Question 5
+[Answer]: A. Resolve the configured penalty charge rule for the evaluation date and calculate the penalty against eligible unpaid regular invoice balance only. Penalty records must snapshot inputs, rule references, basis amount, rounding rule, and output amount.
+
+### Question 6
+[Answer]: A. Penalty calculation excludes prior penalty source records, penalty waivers, reminder fees, and penalty-on-penalty amounts from the penalty basis. Only eligible unpaid principal or configured charge categories can form the basis.
+
+### Question 7
+[Answer]: A. Calculate penalty eligibility and basis from the remaining eligible open amount after posted payments, allocations, credits, reversals, and approved corrections effective as of the evaluation date. Do not calculate penalties from the original invoice amount when partial payments have reduced the eligible basis.
+
+### Question 8
+[Answer]: A. Prevent more than one non-voided penalty source record for the same invoice, responsible billing account, penalty charge type, and penalty period. Replacement requires an explicit correction or reissue workflow with audit and linkage.
+
+### Question 9
+[Answer]: A. Use `Draft`, `Applied`, `Voided`, and `Reissued`. Applied financial history is immutable. Terminal statuses require reason and audit. Replacements must create linked source records rather than editing applied penalty records in place.
+
+### Question 10
+[Answer]: A. Waiver requests require penalty source record, waiver amount or full-waiver flag, reason, actor, approval reference, and audit. Approval creates a linked waiver source record and balance-impact fact without deleting or mutating the original penalty.
+
+### Question 11
+[Answer]: A. No. A waiver cannot exceed the current available unpaid amount of the target penalty after prior waivers, payments, credits, reversals, and corrections effective as of the waiver date. Excess waiver amount must not automatically become a credit.
+
+### Question 12
+[Answer]: A. Delinquency and aging use remaining unpaid open amount after approved waivers and payment effects. A waived penalty no longer contributes to delinquent amount, but the original penalty remains visible in history.
+
+### Question 13
+[Answer]: A. A reminder is eligible when an invoice or account has positive overdue open amount after grace period and suppression rules, the homeowner has an authorized notification contact path, and no duplicate reminder intent exists for the same scope and reminder period.
+
+### Question 14
+[Answer]: A. UOW-06 creates reminder eligibility and reminder intent records only. UOW-08 later renders content, sends emails, retries failures, stores documents, and enforces download behavior. UOW-06 must not send SMTP emails directly or render/store reminder documents.
+
+### Question 15
+[Answer]: A. Staff roles may manage penalties, waivers, aging, and reminder eligibility according to permissions. Board Member access is read-only and PII-minimized. Homeowners may read only penalty, waiver, delinquency, and reminder status tied to their authorized billing accounts or properties.
+
+### Question 16
+[Answer]: A. Mandatory PBT candidates are overdue boundary dates, aging bucket classification, penalty duplicate prevention, non-compounding basis exclusion, partial-payment penalty basis, waiver amount limit, waiver idempotency, reminder duplicate suppression, and balance-impact conservation for penalties and waivers."
+**AI Response**: "Applied and validated all 16 UOW-06 Functional Design planning answers. All answers selected valid option A choices with concrete clarifying detail. No blanks, invalid choices, contradictions, vague answers, or unresolved financial assumptions remained."
+**Context**: CONSTRUCTION - UOW-06 Functional Design answer collection and validation
+
+---
+
+## UOW-06 Functional Design - Artifact Generation
+**Timestamp**: 2026-05-10T05:09:33Z
+**User Input**: "### Question 1
+[Answer]: A. An issued, non-voided invoice is overdue when the evaluation date is after `dueDate + resolvedGracePeriodDays`, and the invoice has positive open amount after UOW-05 payment, allocation, credit, reversal, and correction effects are applied. Overdue status must be derived from source facts, not manually toggled.
+
+### Question 2
+[Answer]: A. Use an explicit `evaluationDate` supplied by the penalty, aging, or reminder workflow. Scheduled jobs pass the job business date, and manual staff reviews pass the selected review date. Do not use the server clock as the financial control date.
+
+### Question 3
+[Answer]: A. Use configured day ranges measured from the first overdue date, with default buckets `Current`, `1-30`, `31-60`, `61-90`, and `90+`. Bucket definitions should be effective-dated configuration consumed from UOW-03 or defaulted by UOW-06 only until configured.
+
+### Question 4
+[Answer]: A. Use a normalized penalty period key such as `YYYY-MM` based on the evaluation date in the HOA business timezone. Only one non-voided penalty source record is allowed per invoice, charge type, and penalty period.
+
+### Question 5
+[Answer]: A. Resolve the configured penalty charge rule for the evaluation date and calculate the penalty against eligible unpaid regular invoice balance only. Penalty records must snapshot inputs, rule references, basis amount, rounding rule, and output amount.
+
+### Question 6
+[Answer]: A. Penalty calculation excludes prior penalty source records, penalty waivers, reminder fees, and penalty-on-penalty amounts from the penalty basis. Only eligible unpaid principal or configured charge categories can form the basis.
+
+### Question 7
+[Answer]: A. Calculate penalty eligibility and basis from the remaining eligible open amount after posted payments, allocations, credits, reversals, and approved corrections effective as of the evaluation date. Do not calculate penalties from the original invoice amount when partial payments have reduced the eligible basis.
+
+### Question 8
+[Answer]: A. Prevent more than one non-voided penalty source record for the same invoice, responsible billing account, penalty charge type, and penalty period. Replacement requires an explicit correction or reissue workflow with audit and linkage.
+
+### Question 9
+[Answer]: A. Use `Draft`, `Applied`, `Voided`, and `Reissued`. Applied financial history is immutable. Terminal statuses require reason and audit. Replacements must create linked source records rather than editing applied penalty records in place.
+
+### Question 10
+[Answer]: A. Waiver requests require penalty source record, waiver amount or full-waiver flag, reason, actor, approval reference, and audit. Approval creates a linked waiver source record and balance-impact fact without deleting or mutating the original penalty.
+
+### Question 11
+[Answer]: A. No. A waiver cannot exceed the current available unpaid amount of the target penalty after prior waivers, payments, credits, reversals, and corrections effective as of the waiver date. Excess waiver amount must not automatically become a credit.
+
+### Question 12
+[Answer]: A. Delinquency and aging use remaining unpaid open amount after approved waivers and payment effects. A waived penalty no longer contributes to delinquent amount, but the original penalty remains visible in history.
+
+### Question 13
+[Answer]: A. A reminder is eligible when an invoice or account has positive overdue open amount after grace period and suppression rules, the homeowner has an authorized notification contact path, and no duplicate reminder intent exists for the same scope and reminder period.
+
+### Question 14
+[Answer]: A. UOW-06 creates reminder eligibility and reminder intent records only. UOW-08 later renders content, sends emails, retries failures, stores documents, and enforces download behavior. UOW-06 must not send SMTP emails directly or render/store reminder documents.
+
+### Question 15
+[Answer]: A. Staff roles may manage penalties, waivers, aging, and reminder eligibility according to permissions. Board Member access is read-only and PII-minimized. Homeowners may read only penalty, waiver, delinquency, and reminder status tied to their authorized billing accounts or properties.
+
+### Question 16
+[Answer]: A. Mandatory PBT candidates are overdue boundary dates, aging bucket classification, penalty duplicate prevention, non-compounding basis exclusion, partial-payment penalty basis, waiver amount limit, waiver idempotency, reminder duplicate suppression, and balance-impact conservation for penalties and waivers."
+**AI Response**: "Generated UOW-06 Functional Design artifacts: business-logic-model.md, business-rules.md, domain-entities.md, and frontend-components.md. Updated the UOW-06 Functional Design plan checkboxes and moved aidlc-state.md to await explicit Functional Design approval."
+**Context**: CONSTRUCTION - UOW-06 Functional Design artifact generation
+
+---
+
+## UOW-06 Functional Design - Approval Prompt
+**Timestamp**: 2026-05-10T05:09:33Z
+**User Input**: "### Question 1
+[Answer]: A. An issued, non-voided invoice is overdue when the evaluation date is after `dueDate + resolvedGracePeriodDays`, and the invoice has positive open amount after UOW-05 payment, allocation, credit, reversal, and correction effects are applied. Overdue status must be derived from source facts, not manually toggled.
+
+### Question 2
+[Answer]: A. Use an explicit `evaluationDate` supplied by the penalty, aging, or reminder workflow. Scheduled jobs pass the job business date, and manual staff reviews pass the selected review date. Do not use the server clock as the financial control date.
+
+### Question 3
+[Answer]: A. Use configured day ranges measured from the first overdue date, with default buckets `Current`, `1-30`, `31-60`, `61-90`, and `90+`. Bucket definitions should be effective-dated configuration consumed from UOW-03 or defaulted by UOW-06 only until configured.
+
+### Question 4
+[Answer]: A. Use a normalized penalty period key such as `YYYY-MM` based on the evaluation date in the HOA business timezone. Only one non-voided penalty source record is allowed per invoice, charge type, and penalty period.
+
+### Question 5
+[Answer]: A. Resolve the configured penalty charge rule for the evaluation date and calculate the penalty against eligible unpaid regular invoice balance only. Penalty records must snapshot inputs, rule references, basis amount, rounding rule, and output amount.
+
+### Question 6
+[Answer]: A. Penalty calculation excludes prior penalty source records, penalty waivers, reminder fees, and penalty-on-penalty amounts from the penalty basis. Only eligible unpaid principal or configured charge categories can form the basis.
+
+### Question 7
+[Answer]: A. Calculate penalty eligibility and basis from the remaining eligible open amount after posted payments, allocations, credits, reversals, and approved corrections effective as of the evaluation date. Do not calculate penalties from the original invoice amount when partial payments have reduced the eligible basis.
+
+### Question 8
+[Answer]: A. Prevent more than one non-voided penalty source record for the same invoice, responsible billing account, penalty charge type, and penalty period. Replacement requires an explicit correction or reissue workflow with audit and linkage.
+
+### Question 9
+[Answer]: A. Use `Draft`, `Applied`, `Voided`, and `Reissued`. Applied financial history is immutable. Terminal statuses require reason and audit. Replacements must create linked source records rather than editing applied penalty records in place.
+
+### Question 10
+[Answer]: A. Waiver requests require penalty source record, waiver amount or full-waiver flag, reason, actor, approval reference, and audit. Approval creates a linked waiver source record and balance-impact fact without deleting or mutating the original penalty.
+
+### Question 11
+[Answer]: A. No. A waiver cannot exceed the current available unpaid amount of the target penalty after prior waivers, payments, credits, reversals, and corrections effective as of the waiver date. Excess waiver amount must not automatically become a credit.
+
+### Question 12
+[Answer]: A. Delinquency and aging use remaining unpaid open amount after approved waivers and payment effects. A waived penalty no longer contributes to delinquent amount, but the original penalty remains visible in history.
+
+### Question 13
+[Answer]: A. A reminder is eligible when an invoice or account has positive overdue open amount after grace period and suppression rules, the homeowner has an authorized notification contact path, and no duplicate reminder intent exists for the same scope and reminder period.
+
+### Question 14
+[Answer]: A. UOW-06 creates reminder eligibility and reminder intent records only. UOW-08 later renders content, sends emails, retries failures, stores documents, and enforces download behavior. UOW-06 must not send SMTP emails directly or render/store reminder documents.
+
+### Question 15
+[Answer]: A. Staff roles may manage penalties, waivers, aging, and reminder eligibility according to permissions. Board Member access is read-only and PII-minimized. Homeowners may read only penalty, waiver, delinquency, and reminder status tied to their authorized billing accounts or properties.
+
+### Question 16
+[Answer]: A. Mandatory PBT candidates are overdue boundary dates, aging bucket classification, penalty duplicate prevention, non-compounding basis exclusion, partial-payment penalty basis, waiver amount limit, waiver idempotency, reminder duplicate suppression, and balance-impact conservation for penalties and waivers."
+**AI Response**: "Functional Design Complete - UOW-06 Penalties, Delinquency, Waivers, and Reminders. Please examine the functional design artifacts and choose Request Changes or Continue to Next Stage."
+**Context**: CONSTRUCTION - UOW-06 Functional Design approval gate
+
+---
+
+## UOW-06 Functional Design - Patch Request
+**Timestamp**: 2026-05-10T05:16:14Z
+**User Input**: "UOW06-PENALTY-013
+Clarify UOW-03 supplies configuration primitives; UOW-06 owns penalty logic and source records.
+
+UOW06-AGING-005
+Define first overdue date and aging day-count semantics.
+
+UOW06-DUPLICATE-004
+Define which penalty statuses are duplicate-blocking.
+
+UOW06-WAIVER-007
+Make waiver idempotency an explicit business rule.
+
+UOW06-REMINDER-006
+Define reminder suppression source and MVP default behavior."
+**AI Response**: "Patched UOW-06 Functional Design artifacts with the requested rule additions and mirrored semantics in the business logic model, domain entities, and frontend suppression detail."
+**Context**: CONSTRUCTION - UOW-06 Functional Design patch
+
+---
+
+## UOW-06 Functional Design - Approval
+**Timestamp**: 2026-05-10T05:18:25Z
+**User Input**: "approve"
+**AI Response**: "Recorded explicit approval of UOW-06 Functional Design and proceeded to UOW-06 NFR Requirements Planning."
+**Context**: CONSTRUCTION - UOW-06 Functional Design approval
+
+---
+
+## UOW-06 NFR Requirements - Planning
+**Timestamp**: 2026-05-10T05:18:25Z
+**User Input**: "approve"
+**AI Response**: "Created aidlc-docs/construction/plans/uow-06-nfr-requirements-plan.md with UOW-06 NFR scope, source context, checklist, Security Baseline and Property-Based Testing compliance summaries, and 19 NFR Requirements questions covering load, performance, transactionality, concurrency, fail-closed behavior, date determinism, precision, durability, security, logging, database design, reminder reliability, validation, PBT, accessibility, observability, auditability, and tech stack posture. Updated aidlc-state.md to mark UOW-06 Functional Design complete and wait at UOW-06 NFR Requirements Planning."
+**Context**: CONSTRUCTION - UOW-06 NFR Requirements planning
+
+---
+
+## UOW-06 NFR Requirements - Planning Answer Prompt
+**Timestamp**: 2026-05-10T05:18:25Z
+**User Input**: "approve"
+**AI Response**: "Please answer all 19 questions in aidlc-docs/construction/plans/uow-06-nfr-requirements-plan.md by filling each [Answer]: tag with a letter choice. After all answers are complete, reply done so the answers can be validated before UOW-06 NFR Requirements artifact generation."
+**Context**: CONSTRUCTION - UOW-06 NFR Requirements planning answer gate
+
+---
+
+## UOW-06 NFR Requirements - Planning Answers
+**Timestamp**: 2026-05-10T05:20:31Z
+**User Input**: "accept all recommended"
+**AI Response**: "Applied option A to all 19 UOW-06 NFR Requirements planning questions."
+**Context**: CONSTRUCTION - UOW-06 NFR Requirements answer collection
+
+---
+
+## UOW-06 NFR Requirements - Answer Validation
+**Timestamp**: 2026-05-10T05:20:31Z
+**User Input**: "accept all recommended"
+**AI Response**: "Validated all 19 UOW-06 NFR Requirements answers. All answers selected valid option A choices. No blanks, invalid choices, contradictions, vague answers, or unresolved NFR assumptions remained."
+**Context**: CONSTRUCTION - UOW-06 NFR Requirements answer validation
+
+---
+
+## UOW-06 NFR Requirements - Artifact Generation
+**Timestamp**: 2026-05-10T05:20:31Z
+**User Input**: "accept all recommended"
+**AI Response**: "Generated UOW-06 NFR Requirements artifacts: nfr-requirements.md and tech-stack-decisions.md. Updated the UOW-06 NFR Requirements plan checkboxes and moved aidlc-state.md to await explicit NFR Requirements approval."
+**Context**: CONSTRUCTION - UOW-06 NFR Requirements artifact generation
+
+---
+
+## UOW-06 NFR Requirements - Approval Prompt
+**Timestamp**: 2026-05-10T05:20:31Z
+**User Input**: "accept all recommended"
+**AI Response**: "NFR Requirements Complete - UOW-06 Penalties, Delinquency, Waivers, and Reminders. Please examine the NFR requirements artifacts and choose Request Changes or Continue to Next Stage."
+**Context**: CONSTRUCTION - UOW-06 NFR Requirements approval gate
+
+---
+
+## UOW-06 NFR Requirements - Approval
+**Timestamp**: 2026-05-10T05:23:08Z
+**User Input**: "approve"
+**AI Response**: "Recorded explicit approval of UOW-06 NFR Requirements and proceeded to UOW-06 NFR Design Planning."
+**Context**: CONSTRUCTION - UOW-06 NFR Requirements approval
+
+---
+
+## UOW-06 NFR Design - Planning
+**Timestamp**: 2026-05-10T05:23:08Z
+**User Input**: "approve"
+**AI Response**: "Created aidlc-docs/construction/plans/uow-06-nfr-design-plan.md with UOW-06 NFR Design scope, source context, checklist, Security Baseline and Property-Based Testing compliance summaries, and 14 NFR Design questions covering date control, overdue/aging query patterns, penalty run and application patterns, duplicate penalty guards, waiver idempotency, reminder suppression, fail-closed validation, decimal calculation, authorization, observability, frontend NFRs, PBT design, and logical component decomposition. Updated aidlc-state.md to mark UOW-06 NFR Requirements complete and wait at UOW-06 NFR Design Planning."
+**Context**: CONSTRUCTION - UOW-06 NFR Design planning
+
+---
+
+## UOW-06 NFR Design - Planning Answer Prompt
+**Timestamp**: 2026-05-10T05:23:08Z
+**User Input**: "approve"
+**AI Response**: "Please answer all 14 questions in aidlc-docs/construction/plans/uow-06-nfr-design-plan.md by filling each [Answer]: tag with a letter choice. After all answers are complete, reply done so the answers can be validated before UOW-06 NFR Design artifact generation."
+**Context**: CONSTRUCTION - UOW-06 NFR Design planning answer gate
+
+---
+
+## UOW-06 NFR Design - Planning Answers
+**Timestamp**: 2026-05-10T05:24:56Z
+**User Input**: "accept all recommended"
+**AI Response**: "Applied option A to all 14 UOW-06 NFR Design planning questions."
+**Context**: CONSTRUCTION - UOW-06 NFR Design answer collection
+
+---
+
+## UOW-06 NFR Design - Answer Validation
+**Timestamp**: 2026-05-10T05:24:56Z
+**User Input**: "accept all recommended"
+**AI Response**: "Validated all 14 UOW-06 NFR Design answers. All answers selected valid option A choices. No blanks, invalid choices, contradictions, vague answers, or unresolved NFR design assumptions remained."
+**Context**: CONSTRUCTION - UOW-06 NFR Design answer validation
+
+---
+
+## UOW-06 NFR Design - Artifact Generation
+**Timestamp**: 2026-05-10T05:24:56Z
+**User Input**: "accept all recommended"
+**AI Response**: "Generated UOW-06 NFR Design artifacts: nfr-design-patterns.md and logical-components.md. Updated the UOW-06 NFR Design plan checkboxes and moved aidlc-state.md to await explicit NFR Design approval."
+**Context**: CONSTRUCTION - UOW-06 NFR Design artifact generation
+
+---
+
+## UOW-06 NFR Design - Approval Prompt
+**Timestamp**: 2026-05-10T05:24:56Z
+**User Input**: "accept all recommended"
+**AI Response**: "NFR Design Complete - UOW-06 Penalties, Delinquency, Waivers, and Reminders. Please examine the NFR design artifacts and choose Request Changes or Continue to Next Stage."
+**Context**: CONSTRUCTION - UOW-06 NFR Design approval gate
+
+---
+
+## UOW-06 NFR Design - Approval
+**Timestamp**: 2026-05-10T05:27:43Z
+**User Input**: "approve"
+**AI Response**: "Recorded explicit approval of UOW-06 NFR Design and proceeded to UOW-06 Infrastructure Design Planning."
+**Context**: CONSTRUCTION - UOW-06 NFR Design approval
+
+---
+
+## UOW-06 Infrastructure Design - Planning
+**Timestamp**: 2026-05-10T05:27:43Z
+**User Input**: "approve"
+**AI Response**: "Created aidlc-docs/construction/plans/uow-06-infrastructure-design-plan.md with UOW-06 infrastructure scope, source context, checklist, Security Baseline and Property-Based Testing compliance summaries, and 12 Infrastructure Design questions covering deployment model, database migration, constraints/locks, candidate generation execution, financial mutation execution, backup/restore, monitoring, alerts, route exposure, configuration/secrets, reminder intents, and shared infrastructure updates. Updated aidlc-state.md to mark UOW-06 NFR Design complete and wait at UOW-06 Infrastructure Design Planning."
+**Context**: CONSTRUCTION - UOW-06 Infrastructure Design planning
+
+---
+
+## UOW-06 Infrastructure Design - Planning Answer Prompt
+**Timestamp**: 2026-05-10T05:27:43Z
+**User Input**: "approve"
+**AI Response**: "Please answer all 12 questions in aidlc-docs/construction/plans/uow-06-infrastructure-design-plan.md by filling each [Answer]: tag with a letter choice. After all answers are complete, reply done so the answers can be validated before UOW-06 Infrastructure Design artifact generation."
+**Context**: CONSTRUCTION - UOW-06 Infrastructure Design planning answer gate
+
+---
+
+## Git Commit And Push Request
+**Timestamp**: 2026-05-10T05:30:00Z
+**User Input**: "commit all changes and push"
+**AI Response**: "Prepared to commit all current workspace changes and push them to the remote repository on a Codex branch."
+**Context**: Git publish request
+
+---

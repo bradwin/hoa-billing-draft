@@ -207,6 +207,38 @@ enum InvoiceIntentStatus {
   Cancelled
 }
 
+enum PaymentProofStatus {
+  Submitted
+  UnderReview
+  Rejected
+  Posted
+  Cancelled
+}
+
+enum PaymentStatus {
+  Posted
+  Reversed
+}
+
+enum CreditStatus {
+  Available
+  PartiallyApplied
+  Applied
+  Reversed
+}
+
+enum ReceiptStatus {
+  Issued
+  Reversed
+}
+
+enum PaymentIntentStatus {
+  Queued
+  Accepted
+  Failed
+  Cancelled
+}
+
 model User {
   id                  String              @id @default(uuid())
   email               String              @unique
@@ -1007,6 +1039,275 @@ model InvoiceEmailIntent {
   issuedInvoiceSnapshot    IssuedInvoiceSnapshot @relation(fields: [issuedInvoiceSnapshotId], references: [id])
 
   @@index([invoiceId, status])
+  @@index([recipientHomeownerId])
+  @@index([correlationId])
+}
+
+model PaymentProof {
+  id                  String             @id @default(uuid())
+  status              PaymentProofStatus @default(Submitted)
+  homeownerId          String
+  billingAccountId     String
+  propertyId           String?
+  amount               Decimal            @db.Decimal(14, 2)
+  paymentDate          DateTime
+  paymentMethodKey     String
+  externalReference    String?
+  targetInvoiceIds     Json
+  attachmentIntentRef  String?
+  submittedByUserId    String
+  reviewedByUserId     String?
+  reason               String?
+  correlationId        String
+  submittedAt          DateTime           @default(now())
+  reviewedAt           DateTime?
+  updatedAt            DateTime           @updatedAt
+
+  payments             Payment[]
+
+  @@index([status, submittedAt])
+  @@index([homeownerId, status])
+  @@index([billingAccountId, status])
+  @@index([propertyId, status])
+  @@index([billingAccountId, paymentMethodKey, externalReference, paymentDate])
+  @@index([correlationId])
+}
+
+model Payment {
+  id                     String              @id @default(uuid())
+  status                 PaymentStatus       @default(Posted)
+  paymentProofId         String?
+  homeownerId             String
+  billingAccountId        String
+  propertyId              String?
+  amount                  Decimal             @db.Decimal(14, 2)
+  paymentDate             DateTime
+  postingDate             DateTime
+  paymentMethodKey        String
+  externalReference       String?
+  duplicateOverrideReason String?
+  postedByUserId          String
+  correlationId           String
+  createdAt               DateTime            @default(now())
+
+  paymentProof            PaymentProof?       @relation(fields: [paymentProofId], references: [id])
+  allocations             PaymentAllocation[]
+  credits                 Credit[]
+  receipt                 Receipt?
+  reversals               PaymentReversal[]
+  balanceImpactFacts      PaymentBalanceImpactFact[]
+  documentIntents         ReceiptDocumentIntent[]
+  emailIntents            ReceiptEmailIntent[]
+
+  @@index([status, postingDate])
+  @@index([paymentProofId])
+  @@index([homeownerId, status])
+  @@index([billingAccountId, status])
+  @@index([propertyId, status])
+  @@index([billingAccountId, paymentMethodKey, externalReference, paymentDate])
+  @@index([correlationId])
+}
+
+model PaymentAllocation {
+  id                String   @id @default(uuid())
+  paymentId         String
+  invoiceId         String
+  invoiceLineId     String?
+  componentType     String
+  amount            Decimal  @db.Decimal(14, 2)
+  allocationMode    String
+  allocationOrder   Int      @default(0)
+  reason            String?
+  createdByUserId   String
+  correlationId     String
+  createdAt         DateTime @default(now())
+
+  payment           Payment  @relation(fields: [paymentId], references: [id])
+
+  @@index([paymentId])
+  @@index([invoiceId])
+  @@index([invoiceLineId])
+  @@index([componentType])
+  @@index([correlationId])
+}
+
+model Credit {
+  id                  String              @id @default(uuid())
+  status              CreditStatus        @default(Available)
+  sourceType          String
+  sourcePaymentId     String?
+  billingAccountId    String
+  propertyId          String?
+  originalAmount      Decimal             @db.Decimal(14, 2)
+  reason              String
+  createdByUserId     String
+  correlationId       String
+  createdAt           DateTime            @default(now())
+
+  sourcePayment       Payment?            @relation(fields: [sourcePaymentId], references: [id])
+  applications        CreditApplication[]
+
+  @@index([status])
+  @@index([sourcePaymentId])
+  @@index([billingAccountId, status])
+  @@index([propertyId, status])
+  @@index([correlationId])
+}
+
+model CreditApplication {
+  id               String   @id @default(uuid())
+  creditId         String
+  invoiceId        String
+  invoiceLineId    String?
+  componentType    String
+  amount           Decimal  @db.Decimal(14, 2)
+  reason           String
+  createdByUserId  String
+  correlationId    String
+  createdAt        DateTime @default(now())
+
+  credit           Credit   @relation(fields: [creditId], references: [id])
+
+  @@index([creditId])
+  @@index([invoiceId])
+  @@index([invoiceLineId])
+  @@index([correlationId])
+}
+
+model Receipt {
+  id                     String             @id @default(uuid())
+  receiptNumber          String             @unique
+  status                 ReceiptStatus      @default(Issued)
+  paymentId              String             @unique
+  receiptDate            DateTime           @default(now())
+  numberingRuleVersionId String?
+  createdByUserId        String
+  correlationId          String
+  createdAt              DateTime           @default(now())
+
+  payment                Payment            @relation(fields: [paymentId], references: [id])
+  snapshot               ReceiptSnapshot?
+  documentIntents        ReceiptDocumentIntent[]
+  emailIntents           ReceiptEmailIntent[]
+
+  @@index([status, receiptDate])
+  @@index([numberingRuleVersionId])
+  @@index([correlationId])
+}
+
+model ReceiptSnapshot {
+  id                       String   @id @default(uuid())
+  receiptId                String   @unique
+  paymentSnapshot          Json
+  payerSnapshot            Json
+  billingAccountSnapshot   Json
+  propertySnapshot         Json?
+  allocationSummary        Json
+  creditRemainder          Decimal  @db.Decimal(14, 2)
+  configurationReferences  Json
+  sourceProofReference     Json?
+  actorSnapshot            Json
+  createdAt                DateTime @default(now())
+
+  receipt                  Receipt  @relation(fields: [receiptId], references: [id])
+}
+
+model PaymentReversal {
+  id                    String   @id @default(uuid())
+  paymentId             String
+  approvalRequestId     String?
+  reversalEffectiveDate DateTime
+  reason                String
+  reversedByUserId      String
+  allocationReversalRefs Json
+  receiptReversalRef    Json?
+  creditReversalRefs    Json?
+  correlationId         String
+  createdAt             DateTime @default(now())
+
+  payment               Payment  @relation(fields: [paymentId], references: [id])
+
+  @@unique([paymentId])
+  @@index([approvalRequestId])
+  @@index([correlationId])
+}
+
+model FinancialCorrection {
+  id                 String   @id @default(uuid())
+  correctionType     String
+  sourceRecordType   String
+  sourceRecordId     String
+  approvalRequestId  String?
+  amount             Decimal  @db.Decimal(14, 2)
+  effectiveDate      DateTime
+  reason             String
+  createdByUserId    String
+  correlationId      String
+  createdAt          DateTime @default(now())
+
+  @@index([correctionType])
+  @@index([sourceRecordType, sourceRecordId])
+  @@index([approvalRequestId])
+  @@index([correlationId])
+}
+
+model PaymentBalanceImpactFact {
+  id               String   @id @default(uuid())
+  sourceRecordType String
+  sourceRecordId   String
+  paymentId        String?
+  billingAccountId String
+  propertyId       String?
+  invoiceId        String?
+  amount           Decimal  @db.Decimal(14, 2)
+  effectiveDate    DateTime
+  correlationId    String
+  createdAt        DateTime @default(now())
+
+  payment          Payment? @relation(fields: [paymentId], references: [id])
+
+  @@index([sourceRecordType, sourceRecordId])
+  @@index([paymentId])
+  @@index([billingAccountId, effectiveDate])
+  @@index([propertyId, effectiveDate])
+  @@index([invoiceId])
+  @@index([correlationId])
+}
+
+model ReceiptDocumentIntent {
+  id                         String              @id @default(uuid())
+  paymentId                  String
+  receiptId                  String
+  templateReferenceVersionId String?
+  status                     PaymentIntentStatus @default(Queued)
+  requestedByUserId          String
+  requestedAt                DateTime            @default(now())
+  correlationId              String
+
+  payment                    Payment             @relation(fields: [paymentId], references: [id])
+  receipt                    Receipt             @relation(fields: [receiptId], references: [id])
+
+  @@index([paymentId, status])
+  @@index([receiptId, status])
+  @@index([correlationId])
+}
+
+model ReceiptEmailIntent {
+  id                         String              @id @default(uuid())
+  paymentId                  String
+  receiptId                  String
+  recipientHomeownerId       String?
+  templateReferenceVersionId String?
+  status                     PaymentIntentStatus @default(Queued)
+  requestedByUserId          String
+  requestedAt                DateTime            @default(now())
+  correlationId              String
+
+  payment                    Payment             @relation(fields: [paymentId], references: [id])
+  receipt                    Receipt             @relation(fields: [receiptId], references: [id])
+
+  @@index([paymentId, status])
+  @@index([receiptId, status])
   @@index([recipientHomeownerId])
   @@index([correlationId])
 }

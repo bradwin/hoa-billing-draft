@@ -24,7 +24,19 @@ export const Permissions = {
   UOW04_INVOICE_MANAGE: 'uow04.invoice.manage',
   UOW04_INVOICE_ISSUE: 'uow04.invoice.issue',
   UOW04_INVOICE_LIFECYCLE: 'uow04.invoice.lifecycle',
-  UOW04_INVOICE_SUPPORT_INTENT: 'uow04.invoice.support_intent'
+  UOW04_INVOICE_SUPPORT_INTENT: 'uow04.invoice.support_intent',
+  UOW05_PAYMENT_PROOF_READ: 'uow05.payment_proof.read',
+  UOW05_PAYMENT_PROOF_SUBMIT: 'uow05.payment_proof.submit',
+  UOW05_PAYMENT_PROOF_REVIEW: 'uow05.payment_proof.review',
+  UOW05_PAYMENT_READ: 'uow05.payment.read',
+  UOW05_PAYMENT_POST: 'uow05.payment.post',
+  UOW05_ALLOCATION_MANAGE: 'uow05.allocation.manage',
+  UOW05_CREDIT_MANAGE: 'uow05.credit.manage',
+  UOW05_RECEIPT_READ: 'uow05.receipt.read',
+  UOW05_RECEIPT_MANAGE: 'uow05.receipt.manage',
+  UOW05_REVERSAL_REQUEST: 'uow05.reversal.request',
+  UOW05_CORRECTION_REQUEST: 'uow05.correction.request',
+  UOW05_SUPPORT_INTENT: 'uow05.support_intent'
 } as const;
 
 export type Permission = (typeof Permissions)[keyof typeof Permissions];

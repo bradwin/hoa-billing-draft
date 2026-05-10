@@ -24,7 +24,19 @@ const MATRIX: Record<Role, readonly Permission[]> = {
     Permissions.UOW04_INVOICE_MANAGE,
     Permissions.UOW04_INVOICE_ISSUE,
     Permissions.UOW04_INVOICE_LIFECYCLE,
-    Permissions.UOW04_INVOICE_SUPPORT_INTENT
+    Permissions.UOW04_INVOICE_SUPPORT_INTENT,
+    Permissions.UOW05_PAYMENT_PROOF_READ,
+    Permissions.UOW05_PAYMENT_PROOF_SUBMIT,
+    Permissions.UOW05_PAYMENT_PROOF_REVIEW,
+    Permissions.UOW05_PAYMENT_READ,
+    Permissions.UOW05_PAYMENT_POST,
+    Permissions.UOW05_ALLOCATION_MANAGE,
+    Permissions.UOW05_CREDIT_MANAGE,
+    Permissions.UOW05_RECEIPT_READ,
+    Permissions.UOW05_RECEIPT_MANAGE,
+    Permissions.UOW05_REVERSAL_REQUEST,
+    Permissions.UOW05_CORRECTION_REQUEST,
+    Permissions.UOW05_SUPPORT_INTENT
   ],
   [Roles.Treasurer]: [
     Permissions.SETTINGS_READ,
@@ -39,7 +51,16 @@ const MATRIX: Record<Role, readonly Permission[]> = {
     Permissions.UOW03_CONFIG_ACTIVATE,
     Permissions.UOW04_INVOICE_READ,
     Permissions.UOW04_INVOICE_ISSUE,
-    Permissions.UOW04_INVOICE_LIFECYCLE
+    Permissions.UOW04_INVOICE_LIFECYCLE,
+    Permissions.UOW05_PAYMENT_PROOF_READ,
+    Permissions.UOW05_PAYMENT_READ,
+    Permissions.UOW05_PAYMENT_POST,
+    Permissions.UOW05_ALLOCATION_MANAGE,
+    Permissions.UOW05_CREDIT_MANAGE,
+    Permissions.UOW05_RECEIPT_READ,
+    Permissions.UOW05_RECEIPT_MANAGE,
+    Permissions.UOW05_REVERSAL_REQUEST,
+    Permissions.UOW05_CORRECTION_REQUEST
   ],
   [Roles.BillingStaff]: [
     Permissions.AUDIT_OPERATIONAL_READ,
@@ -56,18 +77,36 @@ const MATRIX: Record<Role, readonly Permission[]> = {
     Permissions.UOW04_INVOICE_READ,
     Permissions.UOW04_INVOICE_MANAGE,
     Permissions.UOW04_INVOICE_ISSUE,
-    Permissions.UOW04_INVOICE_SUPPORT_INTENT
+    Permissions.UOW04_INVOICE_SUPPORT_INTENT,
+    Permissions.UOW05_PAYMENT_PROOF_READ,
+    Permissions.UOW05_PAYMENT_PROOF_REVIEW,
+    Permissions.UOW05_PAYMENT_READ,
+    Permissions.UOW05_PAYMENT_POST,
+    Permissions.UOW05_ALLOCATION_MANAGE,
+    Permissions.UOW05_CREDIT_MANAGE,
+    Permissions.UOW05_RECEIPT_READ,
+    Permissions.UOW05_RECEIPT_MANAGE,
+    Permissions.UOW05_REVERSAL_REQUEST,
+    Permissions.UOW05_CORRECTION_REQUEST,
+    Permissions.UOW05_SUPPORT_INTENT
   ],
   [Roles.BoardMember]: [
     Permissions.AUDIT_OPERATIONAL_READ,
     Permissions.UOW02_HOMEOWNER_READ,
     Permissions.UOW02_PROPERTY_READ,
     Permissions.UOW03_CONFIG_READ,
-    Permissions.UOW04_INVOICE_READ
+    Permissions.UOW04_INVOICE_READ,
+    Permissions.UOW05_PAYMENT_PROOF_READ,
+    Permissions.UOW05_PAYMENT_READ,
+    Permissions.UOW05_RECEIPT_READ
   ],
   [Roles.Homeowner]: [
     Permissions.HOMEOWNER_SELF_READ,
-    Permissions.UOW04_INVOICE_READ
+    Permissions.UOW04_INVOICE_READ,
+    Permissions.UOW05_PAYMENT_PROOF_SUBMIT,
+    Permissions.UOW05_PAYMENT_PROOF_READ,
+    Permissions.UOW05_PAYMENT_READ,
+    Permissions.UOW05_RECEIPT_READ
   ]
 };
 
