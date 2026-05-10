@@ -36,7 +36,20 @@ const MATRIX: Record<Role, readonly Permission[]> = {
     Permissions.UOW05_RECEIPT_MANAGE,
     Permissions.UOW05_REVERSAL_REQUEST,
     Permissions.UOW05_CORRECTION_REQUEST,
-    Permissions.UOW05_SUPPORT_INTENT
+    Permissions.UOW05_SUPPORT_INTENT,
+    Permissions.UOW06_OVERDUE_READ,
+    Permissions.UOW06_OVERDUE_EVALUATE,
+    Permissions.UOW06_AGING_READ,
+    Permissions.UOW06_PENALTY_READ,
+    Permissions.UOW06_PENALTY_GENERATE,
+    Permissions.UOW06_PENALTY_APPLY,
+    Permissions.UOW06_PENALTY_LIFECYCLE,
+    Permissions.UOW06_WAIVER_REQUEST,
+    Permissions.UOW06_WAIVER_APPROVE,
+    Permissions.UOW06_WAIVER_READ,
+    Permissions.UOW06_REMINDER_READ,
+    Permissions.UOW06_REMINDER_INTENT,
+    Permissions.UOW06_SUPPORT_INTENT
   ],
   [Roles.Treasurer]: [
     Permissions.SETTINGS_READ,
@@ -60,7 +73,15 @@ const MATRIX: Record<Role, readonly Permission[]> = {
     Permissions.UOW05_RECEIPT_READ,
     Permissions.UOW05_RECEIPT_MANAGE,
     Permissions.UOW05_REVERSAL_REQUEST,
-    Permissions.UOW05_CORRECTION_REQUEST
+    Permissions.UOW05_CORRECTION_REQUEST,
+    Permissions.UOW06_OVERDUE_READ,
+    Permissions.UOW06_AGING_READ,
+    Permissions.UOW06_PENALTY_READ,
+    Permissions.UOW06_PENALTY_APPLY,
+    Permissions.UOW06_PENALTY_LIFECYCLE,
+    Permissions.UOW06_WAIVER_APPROVE,
+    Permissions.UOW06_WAIVER_READ,
+    Permissions.UOW06_REMINDER_READ
   ],
   [Roles.BillingStaff]: [
     Permissions.AUDIT_OPERATIONAL_READ,
@@ -88,7 +109,18 @@ const MATRIX: Record<Role, readonly Permission[]> = {
     Permissions.UOW05_RECEIPT_MANAGE,
     Permissions.UOW05_REVERSAL_REQUEST,
     Permissions.UOW05_CORRECTION_REQUEST,
-    Permissions.UOW05_SUPPORT_INTENT
+    Permissions.UOW05_SUPPORT_INTENT,
+    Permissions.UOW06_OVERDUE_READ,
+    Permissions.UOW06_OVERDUE_EVALUATE,
+    Permissions.UOW06_AGING_READ,
+    Permissions.UOW06_PENALTY_READ,
+    Permissions.UOW06_PENALTY_GENERATE,
+    Permissions.UOW06_PENALTY_APPLY,
+    Permissions.UOW06_WAIVER_REQUEST,
+    Permissions.UOW06_WAIVER_READ,
+    Permissions.UOW06_REMINDER_READ,
+    Permissions.UOW06_REMINDER_INTENT,
+    Permissions.UOW06_SUPPORT_INTENT
   ],
   [Roles.BoardMember]: [
     Permissions.AUDIT_OPERATIONAL_READ,
@@ -98,7 +130,12 @@ const MATRIX: Record<Role, readonly Permission[]> = {
     Permissions.UOW04_INVOICE_READ,
     Permissions.UOW05_PAYMENT_PROOF_READ,
     Permissions.UOW05_PAYMENT_READ,
-    Permissions.UOW05_RECEIPT_READ
+    Permissions.UOW05_RECEIPT_READ,
+    Permissions.UOW06_OVERDUE_READ,
+    Permissions.UOW06_AGING_READ,
+    Permissions.UOW06_PENALTY_READ,
+    Permissions.UOW06_WAIVER_READ,
+    Permissions.UOW06_REMINDER_READ
   ],
   [Roles.Homeowner]: [
     Permissions.HOMEOWNER_SELF_READ,
@@ -106,7 +143,12 @@ const MATRIX: Record<Role, readonly Permission[]> = {
     Permissions.UOW05_PAYMENT_PROOF_SUBMIT,
     Permissions.UOW05_PAYMENT_PROOF_READ,
     Permissions.UOW05_PAYMENT_READ,
-    Permissions.UOW05_RECEIPT_READ
+    Permissions.UOW05_RECEIPT_READ,
+    Permissions.UOW06_OVERDUE_READ,
+    Permissions.UOW06_AGING_READ,
+    Permissions.UOW06_PENALTY_READ,
+    Permissions.UOW06_WAIVER_READ,
+    Permissions.UOW06_REMINDER_READ
   ]
 };
 

@@ -36,7 +36,20 @@ export const Permissions = {
   UOW05_RECEIPT_MANAGE: 'uow05.receipt.manage',
   UOW05_REVERSAL_REQUEST: 'uow05.reversal.request',
   UOW05_CORRECTION_REQUEST: 'uow05.correction.request',
-  UOW05_SUPPORT_INTENT: 'uow05.support_intent'
+  UOW05_SUPPORT_INTENT: 'uow05.support_intent',
+  UOW06_OVERDUE_READ: 'uow06.overdue.read',
+  UOW06_OVERDUE_EVALUATE: 'uow06.overdue.evaluate',
+  UOW06_AGING_READ: 'uow06.aging.read',
+  UOW06_PENALTY_READ: 'uow06.penalty.read',
+  UOW06_PENALTY_GENERATE: 'uow06.penalty.generate',
+  UOW06_PENALTY_APPLY: 'uow06.penalty.apply',
+  UOW06_PENALTY_LIFECYCLE: 'uow06.penalty.lifecycle',
+  UOW06_WAIVER_REQUEST: 'uow06.waiver.request',
+  UOW06_WAIVER_APPROVE: 'uow06.waiver.approve',
+  UOW06_WAIVER_READ: 'uow06.waiver.read',
+  UOW06_REMINDER_READ: 'uow06.reminder.read',
+  UOW06_REMINDER_INTENT: 'uow06.reminder.intent',
+  UOW06_SUPPORT_INTENT: 'uow06.support_intent'
 } as const;
 
 export type Permission = (typeof Permissions)[keyof typeof Permissions];
