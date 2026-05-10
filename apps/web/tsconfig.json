@@ -1,0 +1,15 @@
+{
+  "extends": "../../tsconfig.base.json",
+  "compilerOptions": {
+    "jsx": "preserve",
+    "module": "ESNext",
+    "noEmit": true,
+    "baseUrl": "../..",
+    "paths": {
+      "@hoa/shared": ["packages/shared/dist/index"],
+      "@hoa/shared/*": ["packages/shared/dist/*"]
+    },
+    "plugins": [{ "name": "next" }]
+  },
+  "include": ["next-env.d.ts", "src/**/*.ts", "src/**/*.tsx", "test/**/*.ts", "test/**/*.tsx"]
+}

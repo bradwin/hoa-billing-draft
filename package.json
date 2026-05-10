@@ -1,0 +1,71 @@
+{
+  "name": "hoa-billing-system",
+  "version": "0.1.0",
+  "private": true,
+  "description": "HOA billing system modular monolith.",
+  "workspaces": [
+    "apps/api",
+    "apps/web",
+    "apps/worker",
+    "packages/shared"
+  ],
+  "scripts": {
+    "build": "npm run build --workspaces",
+    "typecheck": "tsc -p tsconfig.base.json --noEmit",
+    "lint": "npm run lint --workspaces --if-present",
+    "test": "npm run test --workspaces --if-present",
+    "test:pbt": "npm run test:pbt --workspaces --if-present",
+    "test:pbt:replay": "PBT_SEED=${PBT_SEED:?Set PBT_SEED} npm run test:pbt",
+    "prisma:generate": "prisma generate",
+    "prisma:migrate:dev": "prisma migrate dev",
+    "prisma:migrate:deploy": "prisma migrate deploy",
+    "db:verify-audit": "tsx ops/audit/verify-audit-chain.ts",
+    "backup:db": "tsx ops/backup/backup-db.ts",
+    "restore:rehearse": "tsx ops/restore/rehearse-restore.ts",
+    "readiness:production": "tsx ops/readiness/production-readiness.ts",
+    "docker:local": "docker compose -f docker/docker-compose.local.yml up --build",
+    "docker:staging": "docker compose -f docker/docker-compose.staging.yml up --build",
+    "docker:production": "docker compose -f docker/docker-compose.production.yml up --build -d",
+    "security:audit": "npm audit --audit-level=moderate",
+    "sbom": "echo \"SBOM generation placeholder: configure CycloneDX or SPDX tooling before production\""
+  },
+  "dependencies": {
+    "@nestjs/common": "11.1.19",
+    "@nestjs/config": "4.0.4",
+    "@nestjs/core": "11.1.19",
+    "@nestjs/platform-express": "11.1.19",
+    "@prisma/client": "5.18.0",
+    "argon2": "0.41.1",
+    "otplib": "12.0.1",
+    "reflect-metadata": "0.2.2",
+    "rxjs": "7.8.1",
+    "zod": "3.23.8"
+  },
+  "devDependencies": {
+    "@nestjs/testing": "11.1.19",
+    "@testing-library/jest-dom": "6.4.8",
+    "@testing-library/react": "15.0.7",
+    "@types/express": "5.0.6",
+    "@types/jest": "29.5.14",
+    "@types/node": "22.5.4",
+    "@types/react": "18.3.5",
+    "@types/react-dom": "18.3.0",
+    "fast-check": "3.22.0",
+    "jest": "29.7.0",
+    "jest-environment-jsdom": "30.4.1",
+    "next": "16.2.6",
+    "prisma": "5.18.0",
+    "react": "18.3.1",
+    "react-dom": "18.3.1",
+    "ts-jest": "29.2.5",
+    "tsx": "4.21.0",
+    "typescript": "5.5.4"
+  },
+  "overrides": {
+    "postcss": "8.5.10"
+  },
+  "engines": {
+    "node": ">=20.11.0",
+    "npm": ">=10.0.0"
+  }
+}

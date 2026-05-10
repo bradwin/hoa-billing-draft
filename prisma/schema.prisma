@@ -1,0 +1,1012 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+enum RoleCode {
+  SystemAdministrator
+  Treasurer
+  BillingStaff
+  BoardMember
+  Homeowner
+}
+
+enum UserStatus {
+  Invited
+  Active
+  Inactive
+  Locked
+}
+
+enum SessionStatus {
+  Active
+  MfaPending
+  Expired
+  Revoked
+}
+
+enum InvitationStatus {
+  Pending
+  Accepted
+  Expired
+  Cancelled
+}
+
+enum MfaEnrollmentStatus {
+  Pending
+  Active
+  Disabled
+}
+
+enum ResetStatus {
+  Pending
+  Consumed
+  Expired
+  Cancelled
+}
+
+enum AuditCategory {
+  Security
+  Financial
+  System
+  Configuration
+  Import
+  Workflow
+}
+
+enum AuditResult {
+  Success
+  Denied
+  Failed
+  Info
+}
+
+enum ApprovalStatus {
+  Pending
+  ApprovedPendingApply
+  Rejected
+  Cancelled
+  Applied
+  ApplyFailed
+}
+
+enum SupportIntentType {
+  Notification
+  Document
+  Storage
+  Job
+}
+
+enum SupportIntentStatus {
+  Pending
+  Scheduled
+  Running
+  Completed
+  Failed
+  Cancelled
+}
+
+enum HomeownerStatus {
+  Active
+  Inactive
+  Deceased
+  Archived
+}
+
+enum PropertyBillingStatus {
+  Billable
+  NonBillable
+  Exempt
+  CommonArea
+}
+
+enum PropertyLifecycleStatus {
+  Active
+  Archived
+}
+
+enum OwnershipRole {
+  PrimaryOwner
+  SecondaryOwner
+  AuthorizedRepresentative
+}
+
+enum BillingAccountPeriodStatus {
+  Active
+  Closed
+}
+
+enum ContactChangeRequestStatus {
+  Pending
+  Approved
+  Rejected
+}
+
+enum ConfigurationType {
+  DuesRate
+  BillingCycle
+  DueDate
+  GracePeriod
+  Rounding
+  ChargeType
+  NumberingFormat
+  TemplateReference
+  PaymentMethod
+}
+
+enum ConfigurationDraftStatus {
+  Draft
+  PendingApproval
+  Rejected
+  Activated
+}
+
+enum ConfigurationVersionStatus {
+  Active
+  Superseded
+  Retired
+}
+
+enum BillingCycleType {
+  Monthly
+  Quarterly
+  SemiAnnual
+  Annual
+  Custom
+}
+
+enum DueDateBaseType {
+  BillingPeriodStart
+  BillingPeriodEnd
+  InvoiceIssueDate
+}
+
+enum RoundingTiming {
+  LineLevel
+  InvoiceTotalLevel
+}
+
+enum ChargeCategory {
+  Dues
+  Assessment
+  ManualTaxLike
+  Fee
+  Discount
+  PenaltyConfig
+  Other
+}
+
+enum InvoiceStatus {
+  Draft
+  Issued
+  Cancelled
+  Voided
+  Reissued
+}
+
+enum InvoiceOrigin {
+  Recurring
+  Manual
+  Reissue
+}
+
+enum BillingExceptionStatus {
+  Open
+  Resolved
+  Superseded
+}
+
+enum InvoiceIntentStatus {
+  Queued
+  Accepted
+  Failed
+  Cancelled
+}
+
+model User {
+  id                  String              @id @default(uuid())
+  email               String              @unique
+  displayName         String
+  role                RoleCode
+  status              UserStatus          @default(Invited)
+  homeownerRef        String?
+  mfaRequired         Boolean             @default(false)
+  mfaEnrollmentStatus MfaEnrollmentStatus @default(Pending)
+  passwordHash        String?
+  createdAt           DateTime            @default(now())
+  updatedAt           DateTime            @updatedAt
+
+  invitationsCreated  UserInvitation[]    @relation("InvitationsCreated")
+  sessions            UserSession[]
+  passwordResets      PasswordResetRequest[]
+  mfaEnrollments      MfaEnrollment[]
+  approvalRequests    ApprovalRequest[]   @relation("ApprovalRequester")
+  approvalDecisions   ApprovalRequest[]   @relation("ApprovalDecisionActor")
+  homeownerProfiles   Homeowner[]         @relation("HomeownerPortalAccount")
+
+  @@index([role, status])
+}
+
+model UserInvitation {
+  id          String           @id @default(uuid())
+  email       String
+  role        RoleCode
+  status      InvitationStatus @default(Pending)
+  tokenDigest String           @unique
+  expiresAt   DateTime
+  invitedById String
+  targetRef   String?
+  reason      String?
+  createdAt   DateTime         @default(now())
+  acceptedAt  DateTime?
+
+  invitedBy   User             @relation("InvitationsCreated", fields: [invitedById], references: [id])
+
+  @@index([email, status])
+  @@index([expiresAt])
+}
+
+model UserSession {
+  id             String        @id @default(uuid())
+  userId         String
+  sessionDigest  String        @unique
+  status         SessionStatus @default(Active)
+  createdAt      DateTime      @default(now())
+  expiresAt      DateTime
+  idleExpiresAt  DateTime
+  lastSeenAt     DateTime      @default(now())
+  revokedAt      DateTime?
+  correlationId  String?
+
+  user           User          @relation(fields: [userId], references: [id])
+
+  @@index([userId, status])
+  @@index([expiresAt])
+  @@index([idleExpiresAt])
+}
+
+model PasswordResetRequest {
+  id          String      @id @default(uuid())
+  userId      String
+  status      ResetStatus @default(Pending)
+  tokenDigest String      @unique
+  expiresAt   DateTime
+  createdAt   DateTime    @default(now())
+  consumedAt  DateTime?
+
+  user        User        @relation(fields: [userId], references: [id])
+
+  @@index([userId, status])
+  @@index([expiresAt])
+}
+
+model MfaEnrollment {
+  id                String              @id @default(uuid())
+  userId            String
+  status            MfaEnrollmentStatus @default(Pending)
+  method            String              @default("totp")
+  encryptedSecret   String
+  createdAt         DateTime            @default(now())
+  activatedAt       DateTime?
+  disabledAt        DateTime?
+
+  user              User                @relation(fields: [userId], references: [id])
+  recoveryCodes     MfaRecoveryCode[]
+
+  @@index([userId, status])
+}
+
+model MfaRecoveryCode {
+  id              String        @id @default(uuid())
+  enrollmentId    String
+  codeHash        String        @unique
+  consumedAt      DateTime?
+  createdAt       DateTime      @default(now())
+
+  enrollment      MfaEnrollment @relation(fields: [enrollmentId], references: [id])
+
+  @@index([enrollmentId, consumedAt])
+}
+
+model LoginFailureRecord {
+  id                String   @id @default(uuid())
+  userId            String?
+  normalizedEmailHash String?
+  sourceFingerprint String
+  failureCount      Int      @default(0)
+  firstFailedAt     DateTime @default(now())
+  lastFailedAt      DateTime @default(now())
+  lockedUntil       DateTime?
+
+  @@index([userId, sourceFingerprint])
+  @@index([normalizedEmailHash, sourceFingerprint])
+  @@index([lockedUntil])
+}
+
+model AuditEntry {
+  id             String        @id @default(uuid())
+  occurredAt     DateTime      @default(now())
+  actorUserId    String?
+  category       AuditCategory
+  action         String
+  resourceType   String?
+  resourceId     String?
+  correlationId  String
+  reason         String?
+  oldValue       Json?
+  newValue       Json?
+  result         AuditResult
+  metadata       Json?
+  streamKey      String
+  sequence       Int
+  previousHash   String?
+  recordHash     String
+  hashAlgorithm  String        @default("sha256-v1")
+
+  @@unique([streamKey, sequence])
+  @@index([occurredAt])
+  @@index([actorUserId])
+  @@index([category, action])
+  @@index([resourceType, resourceId])
+  @@index([correlationId])
+}
+
+model SecurityEvent {
+  id            String   @id @default(uuid())
+  auditEntryId  String?
+  eventType     String
+  actorUserId   String?
+  sourceFingerprint String?
+  correlationId String
+  occurredAt    DateTime @default(now())
+  alertable     Boolean  @default(true)
+  metadata      Json?
+
+  @@index([eventType, occurredAt])
+  @@index([actorUserId])
+  @@index([correlationId])
+}
+
+model ApprovalRequest {
+  id              String         @id @default(uuid())
+  requesterUserId String
+  targetType      String
+  targetId        String
+  actionType      String
+  status          ApprovalStatus @default(Pending)
+  reason          String
+  payloadSnapshot Json
+  decisionUserId  String?
+  decisionReason  String?
+  createdAt       DateTime       @default(now())
+  decidedAt       DateTime?
+  appliedAt       DateTime?
+  correlationId   String
+
+  requester       User           @relation("ApprovalRequester", fields: [requesterUserId], references: [id])
+  decisionUser    User?          @relation("ApprovalDecisionActor", fields: [decisionUserId], references: [id])
+
+  @@index([status, createdAt])
+  @@index([requesterUserId])
+  @@index([targetType, targetId])
+  @@index([correlationId])
+}
+
+model SettingCategory {
+  key         String   @id
+  ownerUnit   String
+  visibility  String
+  schemaRef   String
+  createdAt   DateTime @default(now())
+
+  values      SettingValue[]
+}
+
+model SettingValue {
+  id          String          @id @default(uuid())
+  categoryKey String
+  settingKey  String
+  value       Json
+  version     Int             @default(1)
+  updatedBy   String
+  updatedAt   DateTime        @updatedAt
+
+  category    SettingCategory @relation(fields: [categoryKey], references: [key])
+
+  @@unique([categoryKey, settingKey])
+  @@index([updatedBy])
+}
+
+model SupportIntent {
+  id             String              @id @default(uuid())
+  type           SupportIntentType
+  purpose        String
+  sourceType     String?
+  sourceId       String?
+  recipientType  String?
+  recipientId    String?
+  status         SupportIntentStatus @default(Pending)
+  payload        Json
+  requestedBy    String?
+  correlationId  String
+  createdAt      DateTime            @default(now())
+  updatedAt      DateTime            @updatedAt
+
+  @@index([type, status])
+  @@index([sourceType, sourceId])
+  @@index([correlationId])
+}
+
+model Homeowner {
+  id                      String                    @id @default(uuid())
+  homeownerCode           String                    @unique
+  legalName               String
+  normalizedNameKey       String
+  status                  HomeownerStatus           @default(Active)
+  primaryEmail            String?
+  normalizedEmailKey      String?
+  primaryPhone            String?
+  normalizedPhoneKey      String?
+  alternatePhone          String?
+  mailingAddress          String?
+  communicationPreference String?
+  emergencyContactName    String?
+  emergencyContactPhone   String?
+  notes                   String?
+  portalAccountUserId     String?
+  createdAt               DateTime                  @default(now())
+  updatedAt               DateTime                  @updatedAt
+
+  portalAccount           User?                     @relation("HomeownerPortalAccount", fields: [portalAccountUserId], references: [id])
+  duplicateReviews        HomeownerDuplicateReview[]
+  ownershipPeriods        OwnershipPeriod[]
+  billingAccountPeriods   BillingAccountPeriod[]
+  contactChangeRequests   ContactChangeRequest[]
+
+  @@index([status])
+  @@index([normalizedNameKey])
+  @@index([normalizedEmailKey])
+  @@index([normalizedPhoneKey])
+  @@index([portalAccountUserId])
+}
+
+model HomeownerDuplicateReview {
+  id                    String   @id @default(uuid())
+  submittedHomeownerId  String?
+  candidateHomeownerIds Json
+  matchSignals          Json
+  confirmedDistinct     Boolean  @default(false)
+  reviewedByUserId      String
+  reason                String
+  correlationId         String
+  createdAt             DateTime @default(now())
+
+  submittedHomeowner    Homeowner? @relation(fields: [submittedHomeownerId], references: [id])
+
+  @@index([submittedHomeownerId])
+  @@index([reviewedByUserId])
+  @@index([correlationId])
+}
+
+model Property {
+  id                   String                  @id @default(uuid())
+  propertyCode         String                  @unique
+  phaseOrSection       String
+  block                String
+  lot                  String
+  street               String
+  houseNumber          String?
+  canonicalIdentityKey String                  @unique
+  lotAreaSqm           Decimal?                @db.Decimal(14, 4)
+  propertyType         String
+  occupancyStatus      String
+  billingStatus        PropertyBillingStatus   @default(Billable)
+  lifecycleStatus      PropertyLifecycleStatus @default(Active)
+  notes                String?
+  createdAt            DateTime                @default(now())
+  updatedAt            DateTime                @updatedAt
+
+  aliases              PropertyAlias[]
+  ownershipPeriods     OwnershipPeriod[]
+  billingAccountPeriods BillingAccountPeriod[]
+
+  @@index([phaseOrSection, block, lot])
+  @@index([street])
+  @@index([billingStatus, lifecycleStatus])
+}
+
+model PropertyAlias {
+  id                 String   @id @default(uuid())
+  propertyId         String
+  aliasType          String
+  aliasValue         String
+  normalizedAliasKey String
+  createdAt          DateTime @default(now())
+  updatedAt          DateTime @updatedAt
+
+  property           Property @relation(fields: [propertyId], references: [id])
+
+  @@unique([propertyId, normalizedAliasKey])
+  @@index([normalizedAliasKey])
+}
+
+model OwnershipPeriod {
+  id                   String                 @id @default(uuid())
+  propertyId           String
+  homeownerId          String
+  role                 OwnershipRole
+  effectiveFrom        DateTime
+  effectiveTo          DateTime?
+  isBillingResponsible Boolean                @default(false)
+  createdByUserId      String
+  createdAt            DateTime               @default(now())
+  closedAt             DateTime?
+
+  property             Property               @relation(fields: [propertyId], references: [id])
+  homeowner            Homeowner              @relation(fields: [homeownerId], references: [id])
+  billingAccountPeriods BillingAccountPeriod[]
+
+  @@index([propertyId, role, effectiveFrom, effectiveTo])
+  @@index([homeownerId, effectiveFrom])
+  @@index([isBillingResponsible])
+}
+
+model BillingAccountPeriod {
+  id                String                     @id @default(uuid())
+  billingAccountRef String                     @unique
+  propertyId        String
+  homeownerId       String
+  ownershipPeriodId String
+  effectiveFrom     DateTime
+  effectiveTo       DateTime?
+  status            BillingAccountPeriodStatus @default(Active)
+  createdAt         DateTime                   @default(now())
+  closedAt          DateTime?
+
+  property          Property                   @relation(fields: [propertyId], references: [id])
+  homeowner         Homeowner                  @relation(fields: [homeownerId], references: [id])
+  ownershipPeriod   OwnershipPeriod            @relation(fields: [ownershipPeriodId], references: [id])
+
+  @@index([propertyId, effectiveFrom, effectiveTo])
+  @@index([homeownerId, effectiveFrom])
+  @@index([propertyId, homeownerId, effectiveFrom, effectiveTo])
+}
+
+model ContactChangeRequest {
+  id              String                     @id @default(uuid())
+  homeownerId     String
+  requesterUserId String
+  status          ContactChangeRequestStatus @default(Pending)
+  requestedChanges Json
+  oldValues       Json
+  newValues       Json
+  remarks         String?
+  decisionUserId  String?
+  submittedAt     DateTime                   @default(now())
+  decidedAt       DateTime?
+  correlationId   String
+
+  homeowner       Homeowner                  @relation(fields: [homeownerId], references: [id])
+
+  @@index([homeownerId, status])
+  @@index([requesterUserId, status])
+  @@index([decisionUserId])
+  @@index([submittedAt])
+  @@index([correlationId])
+}
+
+model BillingConfigurationDraft {
+  id                        String                   @id @default(uuid())
+  configurationType         ConfigurationType
+  identityKey               String
+  scopeKey                  String                   @default("hoa-default")
+  ruleType                  String
+  payload                   Json
+  status                    ConfigurationDraftStatus @default(Draft)
+  effectiveFrom             DateTime
+  effectiveTo               DateTime?
+  requiresTreasurerApproval Boolean                  @default(true)
+  approvalRequestId         String?
+  createdByUserId           String
+  remarks                   String?
+  correlationId             String
+  createdAt                 DateTime                 @default(now())
+  updatedAt                 DateTime                 @updatedAt
+
+  versions                  ConfigurationVersion[]
+
+  @@index([configurationType, scopeKey, status])
+  @@index([identityKey, scopeKey, ruleType])
+  @@index([approvalRequestId])
+  @@index([correlationId])
+}
+
+model ConfigurationVersion {
+  id                String                     @id @default(uuid())
+  configurationType ConfigurationType
+  identityKey       String
+  scopeKey          String                     @default("hoa-default")
+  ruleType          String
+  effectiveFrom     DateTime
+  effectiveTo       DateTime?
+  status            ConfigurationVersionStatus @default(Active)
+  sourceDraftId     String
+  approvalRequestId String?
+  activatedByUserId String
+  payload           Json
+  ruleMetadata      Json?
+  auditCorrelationId String
+  activatedAt       DateTime                   @default(now())
+
+  sourceDraft       BillingConfigurationDraft  @relation(fields: [sourceDraftId], references: [id])
+  duesRateRule      DuesRateRule?
+  billingCycleRule  BillingCycleRule?
+  dueDateRule       DueDateRule?
+  gracePeriodRule   GracePeriodRule?
+  roundingRule      RoundingRule?
+  chargeType        ChargeType?
+  numberingFormat   NumberingFormatRule?
+  templateReference TemplateReference?
+  paymentMethod     PaymentMethodDefinition?
+
+  @@index([configurationType, identityKey, scopeKey, ruleType, status])
+  @@index([effectiveFrom, effectiveTo])
+  @@index([sourceDraftId])
+  @@index([approvalRequestId])
+  @@index([auditCorrelationId])
+}
+
+model DuesRateRule {
+  id             String               @id @default(uuid())
+  versionId      String               @unique
+  ratePerSqm     Decimal              @db.Decimal(14, 4)
+  currency       String               @default("PHP")
+  roundingRuleKey String
+  chargeTypeKey  String
+
+  version        ConfigurationVersion @relation(fields: [versionId], references: [id])
+}
+
+model BillingCycleRule {
+  id                String               @id @default(uuid())
+  versionId          String               @unique
+  cycleType          BillingCycleType
+  anchorDate         DateTime
+  customRule         Json?
+  periodLabelFormat  String
+
+  version            ConfigurationVersion @relation(fields: [versionId], references: [id])
+}
+
+model DueDateRule {
+  id            String               @id @default(uuid())
+  versionId     String               @unique
+  baseDateType  DueDateBaseType
+  dayOffset     Int
+
+  version       ConfigurationVersion @relation(fields: [versionId], references: [id])
+}
+
+model GracePeriodRule {
+  id          String               @id @default(uuid())
+  versionId   String               @unique
+  graceDays   Int
+
+  version     ConfigurationVersion @relation(fields: [versionId], references: [id])
+}
+
+model RoundingRule {
+  id             String               @id @default(uuid())
+  versionId      String               @unique
+  roundingMode   String               @default("HalfUp")
+  moneyScale     Int                  @default(2)
+  lotAreaScale   Int                  @default(4)
+  rateScale      Int                  @default(4)
+  roundingTiming RoundingTiming       @default(LineLevel)
+
+  version        ConfigurationVersion @relation(fields: [versionId], references: [id])
+}
+
+model ChargeType {
+  id                            String               @id @default(uuid())
+  versionId                     String               @unique
+  code                          String
+  name                          String
+  category                      ChargeCategory
+  isRecurringEligible           Boolean              @default(false)
+  isManualEntryEligible         Boolean              @default(false)
+  isAutomaticGenerationEligible Boolean              @default(false)
+  active                        Boolean              @default(true)
+
+  version                       ConfigurationVersion @relation(fields: [versionId], references: [id])
+
+  @@index([code, category, active])
+}
+
+model NumberingFormatRule {
+  id             String               @id @default(uuid())
+  versionId      String               @unique
+  documentType   String
+  prefixTemplate String
+  sequenceScope  String
+  padding        Int
+  resetPolicy    String               @default("Never")
+
+  version        ConfigurationVersion @relation(fields: [versionId], references: [id])
+
+  @@index([documentType])
+}
+
+model TemplateReference {
+  id           String               @id @default(uuid())
+  versionId    String               @unique
+  templateType String
+  templateKey  String
+  versionLabel String
+  active       Boolean              @default(true)
+
+  version      ConfigurationVersion @relation(fields: [versionId], references: [id])
+
+  @@index([templateType, active])
+}
+
+model PaymentMethodDefinition {
+  id                String               @id @default(uuid())
+  versionId         String               @unique
+  code              String
+  displayName       String
+  instructions      String?
+  referenceRequired Boolean              @default(false)
+  sortOrder         Int                  @default(0)
+  active            Boolean              @default(true)
+
+  version           ConfigurationVersion @relation(fields: [versionId], references: [id])
+
+  @@index([code, active])
+  @@index([sortOrder])
+}
+
+model InvoiceBatch {
+  id                 String              @id @default(uuid())
+  billingPeriodKey   String
+  billingPeriodStart DateTime
+  billingPeriodEnd   DateTime
+  chargeTypeKey      String
+  scope              Json
+  validationDate     DateTime
+  status             String              @default("Open")
+  createdByUserId    String
+  correlationId      String
+  createdAt          DateTime            @default(now())
+
+  invoices           Invoice[]
+  exceptions         BillingException[]
+
+  @@index([billingPeriodKey, chargeTypeKey])
+  @@index([createdAt])
+  @@index([correlationId])
+}
+
+model BillingException {
+  id                String                 @id @default(uuid())
+  invoiceBatchId    String
+  propertyId        String
+  homeownerId       String?
+  billingAccountId  String?
+  validationDate    DateTime
+  failureCode       String
+  failureDetails    Json
+  status            BillingExceptionStatus @default(Open)
+  correlationId     String
+  createdAt         DateTime               @default(now())
+  resolvedAt        DateTime?
+
+  invoiceBatch      InvoiceBatch           @relation(fields: [invoiceBatchId], references: [id])
+
+  @@index([invoiceBatchId, status])
+  @@index([propertyId, status])
+  @@index([billingAccountId])
+  @@index([failureCode])
+  @@index([correlationId])
+}
+
+model Invoice {
+  id                       String                    @id @default(uuid())
+  invoiceNumber            String?
+  origin                   InvoiceOrigin
+  status                   InvoiceStatus             @default(Draft)
+  invoiceBatchId           String?
+  propertyId               String
+  billingAccountId         String
+  responsibleHomeownerId   String
+  billingPeriodKey         String?
+  billingPeriodStart       DateTime?
+  billingPeriodEnd         DateTime?
+  issueDate                DateTime?
+  dueDate                  DateTime
+  currency                 String                    @default("PHP")
+  subtotalAmount           Decimal                   @db.Decimal(14, 2)
+  totalAmount              Decimal                   @db.Decimal(14, 2)
+  reason                   String?
+  supersedesInvoiceId      String?
+  supersededByInvoiceId    String?
+  approvalRequestId        String?
+  replacementOfInvoiceId   String?
+  createdByUserId          String
+  correlationId            String
+  createdAt                DateTime                  @default(now())
+  updatedAt                DateTime                  @updatedAt
+  issuedAt                 DateTime?
+
+  invoiceBatch             InvoiceBatch?             @relation(fields: [invoiceBatchId], references: [id])
+  lines                    InvoiceLine[]
+  issuedSnapshot           IssuedInvoiceSnapshot?
+  numberAssignment         InvoiceNumberAssignment?
+  openAmountInputs         InvoiceOpenAmountInput[]
+  lifecycleActions         InvoiceLifecycleAction[]
+  documentIntents          InvoiceDocumentIntent[]
+  emailIntents             InvoiceEmailIntent[]
+
+  @@unique([invoiceNumber])
+  @@index([status, origin])
+  @@index([propertyId, status])
+  @@index([billingAccountId, status])
+  @@index([responsibleHomeownerId, status])
+  @@index([billingPeriodKey, status])
+  @@index([approvalRequestId])
+  @@index([correlationId])
+}
+
+model InvoiceLine {
+  id                       String   @id @default(uuid())
+  invoiceId                String
+  lineNumber               Int
+  chargeTypeKey            String
+  chargeCategory           String
+  description              String
+  quantity                 Decimal? @db.Decimal(14, 4)
+  lotArea                  Decimal? @db.Decimal(14, 4)
+  rate                     Decimal? @db.Decimal(14, 4)
+  roundingRuleKey          String?
+  amount                   Decimal  @db.Decimal(14, 2)
+  isManual                 Boolean  @default(false)
+  isManualTaxLike          Boolean  @default(false)
+  manualReason             String?
+  configurationVersionIds  Json
+
+  invoice                  Invoice  @relation(fields: [invoiceId], references: [id])
+
+  @@unique([invoiceId, lineNumber])
+  @@index([chargeTypeKey])
+  @@index([isManualTaxLike])
+}
+
+model IssuedInvoiceSnapshot {
+  id                        String                      @id @default(uuid())
+  invoiceId                 String                      @unique
+  invoiceNumber             String
+  statusAtIssue             InvoiceStatus
+  propertySnapshot          Json
+  billingAccountSnapshot    Json
+  homeownerSnapshot         Json
+  billingPeriodSnapshot     Json?
+  dueDate                   DateTime
+  totalAmount               Decimal                     @db.Decimal(14, 2)
+  configurationReferences   Json
+  sourceReferences          Json
+  createdAt                 DateTime                    @default(now())
+
+  invoice                   Invoice                     @relation(fields: [invoiceId], references: [id])
+  lineSnapshots             IssuedInvoiceLineSnapshot[]
+  documentIntents           InvoiceDocumentIntent[]
+  emailIntents              InvoiceEmailIntent[]
+}
+
+model IssuedInvoiceLineSnapshot {
+  id                       String                @id @default(uuid())
+  issuedInvoiceSnapshotId  String
+  lineNumber               Int
+  chargeTypeSnapshot       Json
+  lotArea                  Decimal?              @db.Decimal(14, 4)
+  rate                     Decimal?              @db.Decimal(14, 4)
+  quantityOrBasis          String?
+  roundingRuleSnapshot     Json?
+  lineAmount               Decimal               @db.Decimal(14, 2)
+  manualMetadata           Json?
+  taxLikeMetadata          Json?
+  calculationInputs        Json
+
+  issuedInvoiceSnapshot    IssuedInvoiceSnapshot @relation(fields: [issuedInvoiceSnapshotId], references: [id])
+
+  @@unique([issuedInvoiceSnapshotId, lineNumber])
+}
+
+model InvoiceNumberAssignment {
+  id                     String   @id @default(uuid())
+  invoiceId              String   @unique
+  invoiceNumber          String   @unique
+  numberingRuleVersionId String?
+  numberingScope         String
+  assignedAt             DateTime @default(now())
+  assignedByUserId       String
+  correlationId          String
+
+  invoice                Invoice  @relation(fields: [invoiceId], references: [id])
+
+  @@index([numberingScope])
+  @@index([correlationId])
+}
+
+model InvoiceOpenAmountInput {
+  id            String   @id @default(uuid())
+  invoiceId     String
+  sourceAmount  Decimal  @db.Decimal(14, 2)
+  currency      String   @default("PHP")
+  effectiveDate DateTime
+  status        String   @default("Active")
+  createdAt     DateTime @default(now())
+
+  invoice       Invoice  @relation(fields: [invoiceId], references: [id])
+
+  @@index([invoiceId, status])
+  @@index([effectiveDate])
+}
+
+model InvoiceLifecycleAction {
+  id                String        @id @default(uuid())
+  invoiceId         String
+  actionType        String
+  fromStatus        InvoiceStatus
+  toStatus          InvoiceStatus
+  reason            String
+  approvalRequestId String?
+  actorUserId       String
+  actionAt          DateTime      @default(now())
+  correlationId     String
+
+  invoice           Invoice       @relation(fields: [invoiceId], references: [id])
+
+  @@index([invoiceId, actionAt])
+  @@index([approvalRequestId])
+  @@index([correlationId])
+}
+
+model InvoiceDocumentIntent {
+  id                       String                @id @default(uuid())
+  invoiceId                String
+  issuedInvoiceSnapshotId  String
+  templateReferenceVersionId String?
+  status                   InvoiceIntentStatus   @default(Queued)
+  requestedByUserId        String
+  requestedAt              DateTime              @default(now())
+  correlationId            String
+
+  invoice                  Invoice               @relation(fields: [invoiceId], references: [id])
+  issuedInvoiceSnapshot    IssuedInvoiceSnapshot @relation(fields: [issuedInvoiceSnapshotId], references: [id])
+
+  @@index([invoiceId, status])
+  @@index([correlationId])
+}
+
+model InvoiceEmailIntent {
+  id                       String                @id @default(uuid())
+  invoiceId                String
+  issuedInvoiceSnapshotId  String
+  recipientHomeownerId     String?
+  templateReferenceVersionId String?
+  status                   InvoiceIntentStatus   @default(Queued)
+  requestedByUserId        String
+  requestedAt              DateTime              @default(now())
+  correlationId            String
+
+  invoice                  Invoice               @relation(fields: [invoiceId], references: [id])
+  issuedInvoiceSnapshot    IssuedInvoiceSnapshot @relation(fields: [issuedInvoiceSnapshotId], references: [id])
+
+  @@index([invoiceId, status])
+  @@index([recipientHomeownerId])
+  @@index([correlationId])
+}

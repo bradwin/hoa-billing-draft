@@ -1,0 +1,22 @@
+node_modules/
+dist/
+.next/
+coverage/
+.turbo/
+*.log
+.DS_Store
+
+# Environment and secrets
+.env
+.env.*
+!.env.example
+secrets/
+*.pem
+*.key
+*.crt
+
+# Runtime data
+docker/data/
+docker/backups/
+docker/logs/
+tmp/

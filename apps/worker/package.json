@@ -1,0 +1,13 @@
+{
+  "name": "@hoa/worker",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "build": "npm run build --workspace @hoa/shared && tsc -p tsconfig.json",
+    "test": "jest --config jest.config.js",
+    "test:pbt": "jest --config jest.config.js --testPathPattern pbt --passWithNoTests"
+  },
+  "dependencies": {
+    "@hoa/shared": "0.1.0"
+  }
+}
