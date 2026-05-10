@@ -15,6 +15,7 @@ import { Uow02Module } from './modules/uow02/uow02.module';
 import { Uow03Module } from './modules/uow03/uow03.module';
 import { Uow04Module } from './modules/uow04/uow04.module';
 import { Uow05Module } from './modules/uow05/uow05.module';
+import { Uow06Module } from './modules/uow06/uow06.module';
 import { MeModule } from './modules/me/me.module';
 import { PrismaModule } from './prisma/prisma.module';
 import { PersistenceModule } from './persistence/persistence.module';
@@ -38,6 +39,7 @@ import { PersistenceModule } from './persistence/persistence.module';
     Uow03Module,
     Uow04Module,
     Uow05Module,
+    Uow06Module,
     MeModule
   ],
   controllers: [HealthController],

@@ -5,7 +5,7 @@
 - **Unit ID**: UOW-06
 - **Unit Name**: Penalties, Delinquency, Waivers, and Reminders
 - **Stage**: Infrastructure Design, Planning
-- **Current Gate**: Waiting for Infrastructure Design planning answers
+- **Current Gate**: Waiting for Infrastructure Design approval
 
 ## Purpose
 
@@ -52,16 +52,16 @@ Map approved UOW-06 Functional Design, NFR Requirements, and NFR Design decision
 - [x] Confirm Security Baseline and Property-Based Testing extensions are enabled.
 - [x] Identify UOW-06 infrastructure mapping decisions and risks.
 - [x] Create this Infrastructure Design plan with targeted questions.
-- [ ] Collect answers for every `[Answer]:` tag.
-- [ ] Validate answers for blanks, invalid choices, contradictions, and ambiguity.
-- [ ] Add follow-up questions if any answer is vague, mixed, or contradictory.
-- [ ] Generate `aidlc-docs/construction/uow-06-penalties-delinquency-waivers-reminders/infrastructure-design/infrastructure-design.md`.
-- [ ] Generate `aidlc-docs/construction/uow-06-penalties-delinquency-waivers-reminders/infrastructure-design/deployment-architecture.md`.
-- [ ] Update `aidlc-docs/construction/shared-infrastructure.md` if approved answers require a shared baseline refinement.
-- [ ] Verify Security Baseline compliance summary.
-- [ ] Verify Property-Based Testing infrastructure relevance is marked correctly.
-- [ ] Verify content validation before artifact creation.
-- [ ] Present the standardized Infrastructure Design completion message.
+- [x] Collect answers for every `[Answer]:` tag.
+- [x] Validate answers for blanks, invalid choices, contradictions, and ambiguity.
+- [x] Add follow-up questions if any answer is vague, mixed, or contradictory.
+- [x] Generate `aidlc-docs/construction/uow-06-penalties-delinquency-waivers-reminders/infrastructure-design/infrastructure-design.md`.
+- [x] Generate `aidlc-docs/construction/uow-06-penalties-delinquency-waivers-reminders/infrastructure-design/deployment-architecture.md`.
+- [x] Update `aidlc-docs/construction/shared-infrastructure.md` if approved answers require a shared baseline refinement.
+- [x] Verify Security Baseline compliance summary.
+- [x] Verify Property-Based Testing infrastructure relevance is marked correctly.
+- [x] Verify content validation before artifact creation.
+- [x] Present the standardized Infrastructure Design completion message.
 
 ## Required Infrastructure Design Artifacts
 
@@ -86,7 +86,7 @@ B) Add a separate UOW-06 collections API service boundary
 C) Defer deployment mapping to Code Generation
 X) Other (please describe after [Answer]: tag below)
 
-[Answer]: 
+[Answer]: A
 
 ### Question 2
 How should UOW-06 database changes be deployed?
@@ -96,7 +96,7 @@ B) Allow runtime table creation during first penalty run
 C) Defer database infrastructure planning to Code Generation
 X) Other (please describe after [Answer]: tag below)
 
-[Answer]: 
+[Answer]: A
 
 ### Question 3
 What infrastructure should protect duplicate penalties, waiver idempotency, reissues, and reminder suppression?
@@ -106,7 +106,7 @@ B) Add a distributed lock service now
 C) Rely on frontend sequencing and staff procedures
 X) Other (please describe after [Answer]: tag below)
 
-[Answer]: 
+[Answer]: A
 
 ### Question 4
 What execution infrastructure should UOW-06 use for penalty candidate generation?
@@ -116,7 +116,7 @@ B) Add a dedicated UOW-06 worker service now
 C) Generate candidates only in the browser
 X) Other (please describe after [Answer]: tag below)
 
-[Answer]: 
+[Answer]: A
 
 ### Question 5
 What application infrastructure should UOW-06 use for applying penalties and waivers?
@@ -126,7 +126,7 @@ B) Add a queue and worker for penalty application and waiver execution now
 C) Run penalty application from the browser
 X) Other (please describe after [Answer]: tag below)
 
-[Answer]: 
+[Answer]: A
 
 ### Question 6
 How should UOW-06 data be covered by backup and restore?
@@ -136,7 +136,7 @@ B) Create a separate UOW-06 backup process
 C) Defer penalty/waiver backup coverage until UOW-07 reporting exists
 X) Other (please describe after [Answer]: tag below)
 
-[Answer]: 
+[Answer]: A
 
 ### Question 7
 What logging and monitoring infrastructure should UOW-06 use?
@@ -146,7 +146,7 @@ B) Add a separate observability stack for UOW-06
 C) Keep only generic API health metrics for UOW-06
 X) Other (please describe after [Answer]: tag below)
 
-[Answer]: 
+[Answer]: A
 
 ### Question 8
 Which UOW-06 alerts should be required?
@@ -156,7 +156,7 @@ B) Alert only on service downtime
 C) Defer UOW-06 alerts until production incidents occur
 X) Other (please describe after [Answer]: tag below)
 
-[Answer]: 
+[Answer]: A
 
 ### Question 9
 How should UOW-06 routes be exposed?
@@ -166,7 +166,7 @@ B) Expose UOW-06 API on a separate public port
 C) Allow direct database access for collections staff tools
 X) Other (please describe after [Answer]: tag below)
 
-[Answer]: 
+[Answer]: A
 
 ### Question 10
 What secrets or configuration changes should UOW-06 introduce?
@@ -176,7 +176,7 @@ B) Add UOW-06-specific secret files now
 C) Store UOW-06 configuration in committed environment files
 X) Other (please describe after [Answer]: tag below)
 
-[Answer]: 
+[Answer]: A
 
 ### Question 11
 How should reminder intents map to infrastructure?
@@ -186,7 +186,7 @@ B) Add reminder rendering, SMTP, and retry infrastructure to UOW-06 now
 C) Do not persist reminder intents until UOW-08
 X) Other (please describe after [Answer]: tag below)
 
-[Answer]: 
+[Answer]: A
 
 ### Question 12
 Should shared infrastructure documentation be updated for UOW-06?
@@ -196,7 +196,7 @@ B) No, keep shared infrastructure unchanged even if UOW-06 adds monitoring and a
 C) Replace the shared infrastructure baseline with a UOW-06-specific baseline
 X) Other (please describe after [Answer]: tag below)
 
-[Answer]: 
+[Answer]: A
 
 ## Post-Answer Processing
 

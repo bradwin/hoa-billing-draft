@@ -8,3 +8,4 @@ export * from './uow02';
 export * from './uow03';
 export * from './uow04';
 export * from './uow05';
+export * from './uow06';

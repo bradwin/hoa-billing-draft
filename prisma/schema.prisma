@@ -239,6 +239,28 @@ enum PaymentIntentStatus {
   Cancelled
 }
 
+enum PenaltySourceStatus {
+  Draft
+  Applied
+  Voided
+  Reissued
+}
+
+enum WaiverRequestStatus {
+  Pending
+  Approved
+  Rejected
+  Cancelled
+}
+
+enum ReminderIntentStatus {
+  Queued
+  Accepted
+  Suppressed
+  Failed
+  Cancelled
+}
+
 model User {
   id                  String              @id @default(uuid())
   email               String              @unique
@@ -1309,5 +1331,190 @@ model ReceiptEmailIntent {
   @@index([paymentId, status])
   @@index([receiptId, status])
   @@index([recipientHomeownerId])
+  @@index([correlationId])
+}
+
+model OverdueEvaluationSnapshot {
+  id                       String   @id @default(uuid())
+  invoiceId                String
+  billingAccountId         String
+  propertyId               String?
+  responsibleHomeownerId   String?
+  evaluationDate           DateTime
+  dueDate                  DateTime
+  resolvedGracePeriodDays  Int
+  openAmount               Decimal  @db.Decimal(14, 2)
+  overdue                  Boolean
+  firstOverdueDate         DateTime?
+  agingDayCount            Int
+  agingBucket              String
+  sourceReferences         Json
+  evaluatedByUserId        String
+  correlationId            String
+  createdAt                DateTime @default(now())
+
+  @@index([invoiceId, evaluationDate])
+  @@index([billingAccountId, evaluationDate])
+  @@index([propertyId, evaluationDate])
+  @@index([agingBucket, evaluationDate])
+  @@index([correlationId])
+}
+
+model PenaltySourceRecord {
+  id                          String              @id @default(uuid())
+  status                      PenaltySourceStatus @default(Draft)
+  invoiceId                   String
+  responsibleBillingAccountId String
+  propertyId                  String?
+  responsibleHomeownerId      String?
+  penaltyChargeTypeId         String
+  penaltyPeriodKey            String
+  evaluationDate              DateTime
+  basisAmount                 Decimal             @db.Decimal(14, 2)
+  excludedAmountDetails       Json
+  rateBasisPoints             Int
+  roundingRuleVersionId       String?
+  penaltyAmount               Decimal             @db.Decimal(14, 2)
+  configurationReferences     Json
+  sourceReferences            Json
+  replacementOfPenaltyId      String?
+  reason                      String?
+  createdByUserId             String
+  appliedByUserId             String?
+  correlationId               String
+  createdAt                   DateTime            @default(now())
+  appliedAt                   DateTime?
+  updatedAt                   DateTime            @updatedAt
+
+  waivers                     PenaltyWaiverSourceRecord[]
+  balanceImpactFacts          PenaltyBalanceImpactFact[]
+
+  @@unique([invoiceId, responsibleBillingAccountId, penaltyChargeTypeId, penaltyPeriodKey, status])
+  @@index([status, evaluationDate])
+  @@index([responsibleBillingAccountId, status])
+  @@index([propertyId, status])
+  @@index([responsibleHomeownerId, status])
+  @@index([replacementOfPenaltyId])
+  @@index([correlationId])
+}
+
+model PenaltyWaiverRequest {
+  id                    String              @id @default(uuid())
+  status                WaiverRequestStatus @default(Pending)
+  penaltySourceRecordId String
+  waiverAmount          Decimal?            @db.Decimal(14, 2)
+  fullWaiver            Boolean             @default(false)
+  waiverEffectiveDate   DateTime
+  reason                String
+  approvalRequestId     String?
+  requestedByUserId     String
+  decidedByUserId       String?
+  decisionReason        String?
+  correlationId         String
+  createdAt             DateTime            @default(now())
+  decidedAt             DateTime?
+  updatedAt             DateTime            @updatedAt
+
+  waiver                PenaltyWaiverSourceRecord?
+
+  @@index([status, createdAt])
+  @@index([penaltySourceRecordId])
+  @@index([approvalRequestId])
+  @@index([correlationId])
+}
+
+model PenaltyWaiverSourceRecord {
+  id                    String                 @id @default(uuid())
+  waiverRequestId       String                 @unique
+  penaltySourceRecordId String
+  approvalRequestId     String?
+  idempotencyKey        String                 @unique
+  waiverAmount          Decimal                @db.Decimal(14, 2)
+  availableBeforeWaiver Decimal                @db.Decimal(14, 2)
+  waiverEffectiveDate   DateTime
+  reason                String
+  createdByUserId       String
+  correlationId         String
+  createdAt             DateTime               @default(now())
+
+  waiverRequest         PenaltyWaiverRequest   @relation(fields: [waiverRequestId], references: [id])
+  penalty               PenaltySourceRecord    @relation(fields: [penaltySourceRecordId], references: [id])
+  balanceImpactFacts    PenaltyBalanceImpactFact[]
+
+  @@index([penaltySourceRecordId])
+  @@index([approvalRequestId])
+  @@index([correlationId])
+}
+
+model ReminderEligibilityRecord {
+  id                         String   @id @default(uuid())
+  reminderScopeType          String
+  reminderScopeId            String
+  reminderPeriodKey          String
+  evaluationDate             DateTime
+  billingAccountId           String
+  propertyId                 String?
+  homeownerId                String?
+  overdueOpenAmount          Decimal  @db.Decimal(14, 2)
+  hasAuthorizedContactPath   Boolean
+  duplicateReminderExists    Boolean
+  suppressed                 Boolean
+  suppressionReason          String?
+  contactPathReference       Json?
+  sourceReferences           Json
+  evaluatedByUserId          String
+  correlationId              String
+  createdAt                  DateTime @default(now())
+
+  reminderIntents            ReminderIntentRecord[]
+
+  @@unique([reminderScopeType, reminderScopeId, reminderPeriodKey])
+  @@index([billingAccountId, evaluationDate])
+  @@index([propertyId, evaluationDate])
+  @@index([homeownerId, evaluationDate])
+  @@index([suppressed])
+  @@index([correlationId])
+}
+
+model ReminderIntentRecord {
+  id                         String                @id @default(uuid())
+  reminderEligibilityId      String
+  status                     ReminderIntentStatus  @default(Queued)
+  supportIntentId            String?
+  templateReferenceVersionId String?
+  requestedByUserId          String
+  requestedAt                DateTime              @default(now())
+  correlationId              String
+
+  eligibility                ReminderEligibilityRecord @relation(fields: [reminderEligibilityId], references: [id])
+
+  @@index([reminderEligibilityId, status])
+  @@index([supportIntentId])
+  @@index([correlationId])
+}
+
+model PenaltyBalanceImpactFact {
+  id                    String   @id @default(uuid())
+  sourceRecordType      String
+  sourceRecordId        String
+  penaltySourceRecordId String?
+  waiverSourceRecordId  String?
+  billingAccountId      String
+  propertyId            String?
+  invoiceId             String?
+  amount                Decimal  @db.Decimal(14, 2)
+  effectiveDate         DateTime
+  correlationId         String
+  createdAt             DateTime @default(now())
+
+  penalty               PenaltySourceRecord?       @relation(fields: [penaltySourceRecordId], references: [id])
+  waiver                PenaltyWaiverSourceRecord? @relation(fields: [waiverSourceRecordId], references: [id])
+
+  @@index([sourceRecordType, sourceRecordId])
+  @@index([penaltySourceRecordId])
+  @@index([waiverSourceRecordId])
+  @@index([billingAccountId, effectiveDate])
+  @@index([propertyId, effectiveDate])
+  @@index([invoiceId])
   @@index([correlationId])
 }
