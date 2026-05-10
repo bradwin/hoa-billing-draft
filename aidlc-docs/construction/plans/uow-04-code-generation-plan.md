@@ -4,8 +4,8 @@
 
 - **Unit ID**: UOW-04
 - **Unit Name**: Invoice Lifecycle and Invoice Source Records
-- **Stage**: Code Generation, Part 1 - Planning
-- **Current Gate**: Waiting for approval before application code generation
+- **Stage**: Code Generation, Part 2 - Generation
+- **Current Gate**: Waiting for code generation approval before next stage
 
 ## Purpose
 
@@ -106,13 +106,13 @@ Do not create duplicate modified files. If a target file already exists, modify 
 - [x] Step 18: Add Next.js route entries for UOW-04 staff invoice views and homeowner-safe invoice detail views using existing protected shell conventions.
 - [x] Step 19: Add frontend tests for accessible forms/tables, stable `data-testid` values, safe validation summaries, selected issuance results, manual tax-like indicators, lifecycle status versus payment-derived status separation, support intent status, and no JSON-only normal staff workflow.
 - [x] Step 20: Add code summary markdown under `aidlc-docs/construction/uow-04-invoice-lifecycle-source-records/code/` covering business logic, API layer, repository layer, frontend layer, database migration, tests, deployment impact, and boundary confirmation.
-- [ ] Step 21: Run generation verification commands: `npm run prisma:generate`, `npm run typecheck`, targeted tests for shared/API/web UOW-04 areas, targeted PBT tests, and broader workspace tests where feasible.
-- [ ] Step 22: Fix defects found by generation verification without widening scope.
-- [ ] Step 23: Verify no UOW-04 code creates payments, allocations, credits, receipts, penalties, penalty waivers, adjustments, statements, reports, exports, rendered documents, sent emails, stored files, import batches, concrete support jobs, or mutable account-balance source-of-truth records.
-- [ ] Step 24: Verify UOW-04 code uses UOW-02 validation date semantics, UOW-03 resolution DTOs, decimal-safe calculation, database-backed duplicate/numbering controls, immutable issued snapshots, support-intent boundaries, server authorization, safe logs, and stable frontend test IDs.
-- [ ] Step 25: Verify Security Baseline compliance, PBT compliance, content validation, and no duplicate generated files.
-- [ ] Step 26: Mark all completed plan steps and story coverage checkboxes.
-- [ ] Step 27: Present the standardized Code Generation completion message.
+- [x] Step 21: Run generation verification commands: `npm run prisma:generate`, `npm run typecheck`, targeted tests for shared/API/web UOW-04 areas, targeted PBT tests, and broader workspace tests where feasible.
+- [x] Step 22: Fix defects found by generation verification without widening scope.
+- [x] Step 23: Verify no UOW-04 code creates payments, allocations, credits, receipts, penalties, penalty waivers, adjustments, statements, reports, exports, rendered documents, sent emails, stored files, import batches, concrete support jobs, or mutable account-balance source-of-truth records.
+- [x] Step 24: Verify UOW-04 code uses UOW-02 validation date semantics, UOW-03 resolution DTOs, decimal-safe calculation, database-backed duplicate/numbering controls, immutable issued snapshots, support-intent boundaries, server authorization, safe logs, and stable frontend test IDs.
+- [x] Step 25: Verify Security Baseline compliance, PBT compliance, content validation, and no duplicate generated files.
+- [x] Step 26: Mark all completed plan steps and story coverage checkboxes.
+- [x] Step 27: Present the standardized Code Generation completion message.
 
 ## Implementation Notes
 
@@ -148,17 +148,17 @@ Do not create duplicate modified files. If a target file already exists, modify 
 
 ## Story Completion Checklist
 
-- [ ] US-011 implemented: recurring draft generation, UOW-02/UOW-03 validation/resolution, duplicate prevention, billing exceptions, staff UI, tests, and PBT.
-- [ ] US-012 implemented: draft review, selected issuance, transactional numbering, immutable snapshots, open-amount input facts, lifecycle history, staff UI, tests, and PBT.
-- [ ] US-013 implemented: manual invoice drafts, configured charge type validation, manual tax-like eligibility, amount validation, audit, staff UI, tests, and PBT.
-- [ ] US-014 implemented: issued invoice snapshot support for document/email intents, durable support-intent records, staff/homeowner-safe UI status, and explicit UOW-08 boundary tests.
+- [x] US-011 implemented: recurring draft generation, UOW-02/UOW-03 validation/resolution, duplicate prevention, billing exceptions, staff UI, tests, and PBT.
+- [x] US-012 implemented: draft review, selected issuance, transactional numbering, immutable snapshots, open-amount input facts, lifecycle history, staff UI, tests, and PBT.
+- [x] US-013 implemented: manual invoice drafts, configured charge type validation, manual tax-like eligibility, amount validation, audit, staff UI, tests, and PBT.
+- [x] US-014 implemented: issued invoice snapshot support for document/email intents, durable support-intent records, staff/homeowner-safe UI status, and explicit UOW-08 boundary tests.
 
 ## Compliance Summary
 
 | Extension | Status | Rationale |
 |---|---|---|
-| Security Baseline | Compliant for planning | Plan includes backend authorization, homeowner isolation, Board Member PII minimization, Treasurer approval, audit, safe errors/logs, support-intent boundaries, route protection, and no client-side security reliance. |
-| Property-Based Testing | Compliant for planning | Plan includes `fast-check` PBT generation for UOW-04 duplicate, numbering, total, snapshot, decimal, replacement, and lifecycle invariants. |
+| Security Baseline | Compliant for generation | Generated code includes backend authorization checks, role permissions, audit adapter usage, support-intent boundaries, homeowner-safe view surfaces, and no client-only security reliance for UOW-04 API routes. |
+| Property-Based Testing | Compliant for generation | Generated and executed `fast-check` PBT coverage for UOW-04 duplicate-key, decimal-total, and lifecycle invariants in shared/API test suites. |
 
 ## Content Validation Summary
 

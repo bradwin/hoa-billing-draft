@@ -7,3 +7,4 @@ export * from './support-intent';
 export * from './uow02';
 export * from './uow03';
 export * from './uow04';
+export * from './uow05';
